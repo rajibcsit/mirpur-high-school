@@ -6,6 +6,10 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\NoticeController as AdminNoticeController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\ResultController as AdminResultController;
+use App\Http\Controllers\Admin\ClassRoutineController;
 use App\Http\Controllers\Admin\TeacherController as AdminTeacherController;
 use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\Auth\LoginController;
@@ -13,6 +17,8 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\ResultController;
+use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +38,8 @@ Route::get('/notices/{slug}', [NoticeController::class, 'show'])->name('notices.
 
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers.index');
+Route::get('/results', [ResultController::class, 'index'])->name('results.index');
+Route::get('/routine', [RoutineController::class, 'index'])->name('routine.index');
 
 Route::get('/admission', [AdmissionController::class, 'create'])->name('admission.create');
 Route::post('/admission', [AdmissionController::class, 'store'])->name('admission.store');
@@ -54,6 +62,11 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->
 */
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('sliders', SliderController::class)->except(['show']);
+    Route::resource('students', StudentController::class)->except(['show']);
+    Route::resource('results', AdminResultController::class)->only(['index','create','store','destroy']);
+    Route::resource('routines', ClassRoutineController::class)->except(['show']);
 
     Route::resource('notices', AdminNoticeController::class)->except(['show']);
     Route::resource('events', EventController::class)->except(['show']);

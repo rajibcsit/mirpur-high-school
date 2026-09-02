@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EventModel;
 use App\Models\Gallery;
 use App\Models\Notice;
+use App\Models\Slider;
 use App\Models\Teacher;
 
 class HomeController extends Controller
@@ -15,8 +16,9 @@ class HomeController extends Controller
         $events = EventModel::where('event_date', '>=', now()->subDay())->orderBy('event_date')->take(3)->get();
         $gallery = Gallery::latest()->take(8)->get();
         $teachers = Teacher::orderBy('display_order')->take(4)->get();
+        $sliders = Slider::where('is_active', true)->orderBy('display_order')->get();
 
-        return view('home', compact('notices', 'events', 'gallery', 'teachers'));
+        return view('home', compact('notices', 'events', 'gallery', 'teachers', 'sliders'));
     }
 
     public function about()

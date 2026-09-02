@@ -1,0 +1,8 @@
+@extends('layouts.admin')
+@section('title','Students') @section('page-title','Students')
+@section('content')
+<div class="flex flex-wrap justify-between gap-3 mb-6"><form class="flex gap-2"><input name="search" value="{{ request('search') }}" placeholder="Search name, ID or roll..." class="border rounded-lg px-3 py-2 w-72"><button class="bg-gray-800 text-white px-4 rounded-lg">Search</button></form><a href="{{ route('admin.students.create') }}" class="bg-primary text-white px-5 py-2 rounded-lg">+ Add Student</a></div>
+<div class="bg-white rounded-xl shadow overflow-hidden"><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-50"><tr><th class="text-left p-4">Student</th><th class="p-4">Roll</th><th class="p-4">Class</th><th class="p-4">Year</th><th class="p-4">Actions</th></tr></thead><tbody>
+@forelse($students as $s)<tr class="border-t"><td class="p-4"><div class="font-semibold">{{ $s->name }}</div><div class="text-xs text-gray-500">{{ $s->student_id }}</div></td><td class="p-4 text-center">{{ $s->roll_no }}</td><td class="p-4 text-center">{{ $s->class_name }}{{ $s->section?' - '.$s->section:'' }}</td><td class="p-4 text-center">{{ $s->academic_year }}</td><td class="p-4 text-center"><a href="{{ route('admin.students.edit',$s) }}" class="text-primary mr-3">Edit</a><form class="inline" method="POST" action="{{ route('admin.students.destroy',$s) }}" onsubmit="return confirm('Delete student?')">@csrf @method('DELETE')<button class="text-red-600">Delete</button></form></td></tr>@empty<tr><td colspan="5" class="p-8 text-center text-gray-500">No students found.</td></tr>@endforelse
+</tbody></table></div></div><div class="mt-5">{{ $students->links() }}</div>
+@endsection

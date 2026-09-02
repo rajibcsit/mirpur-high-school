@@ -1,0 +1,8 @@
+@extends('layouts.admin')
+@section('title','Results') @section('page-title','Student Results')
+@section('content')
+<div class="flex flex-wrap justify-between gap-3 mb-6"><form class="flex gap-2"><input name="search" value="{{ request('search') }}" placeholder="Search student..." class="border rounded-lg px-3 py-2"><button class="bg-gray-800 text-white px-4 rounded-lg">Search</button></form><a href="{{ route('admin.results.create') }}" class="bg-primary text-white px-5 py-2 rounded-lg">+ Add Result</a></div>
+<div class="bg-white rounded-xl shadow overflow-hidden"><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-50"><tr><th class="text-left p-4">Student</th><th class="p-4">Exam</th><th class="p-4">Subject</th><th class="p-4">Marks</th><th class="p-4">Grade</th><th class="p-4">Action</th></tr></thead><tbody>
+@forelse($results as $r)<tr class="border-t"><td class="p-4">{{ $r->student->name }}<div class="text-xs text-gray-500">{{ $r->student->student_id }}</div></td><td class="p-4 text-center">{{ $r->exam_name }}<div class="text-xs text-gray-500">{{ $r->academic_year }}</div></td><td class="p-4 text-center">{{ $r->subject }}</td><td class="p-4 text-center">{{ $r->marks }}/{{ $r->full_marks }}</td><td class="p-4 text-center font-semibold">{{ $r->grade }}</td><td class="p-4 text-center"><form method="POST" action="{{ route('admin.results.destroy',$r) }}" onsubmit="return confirm('Delete result?')">@csrf @method('DELETE')<button class="text-red-600">Delete</button></form></td></tr>@empty<tr><td colspan="6" class="p-8 text-center text-gray-500">No results found.</td></tr>@endforelse
+</tbody></table></div></div><div class="mt-5">{{ $results->links() }}</div>
+@endsection

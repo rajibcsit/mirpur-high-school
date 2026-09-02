@@ -37,6 +37,8 @@
                     <a href="{{ route('teachers.index') }}" class="hover:text-primary {{ request()->routeIs('teachers.index') ? 'text-primary font-semibold' : '' }}">Teachers</a>
                     <a href="{{ route('notices.index') }}" class="hover:text-primary {{ request()->routeIs('notices.*') ? 'text-primary font-semibold' : '' }}">Notices</a>
                     <a href="{{ route('gallery.index') }}" class="hover:text-primary {{ request()->routeIs('gallery.index') ? 'text-primary font-semibold' : '' }}">Gallery</a>
+                    <a href="{{ route('results.index') }}" class="hover:text-primary {{ request()->routeIs('results.index') ? 'text-primary font-semibold' : '' }}">Results</a>
+                    <a href="{{ route('routine.index') }}" class="hover:text-primary {{ request()->routeIs('routine.index') ? 'text-primary font-semibold' : '' }}">Routine</a>
                     <a href="{{ route('contact') }}" class="hover:text-primary {{ request()->routeIs('contact') ? 'text-primary font-semibold' : '' }}">Contact</a>
                     <a href="{{ route('admission.create') }}" class="bg-gold text-white px-5 py-2 rounded-full hover:opacity-90 transition">Admission</a>
                 </nav>
@@ -52,6 +54,8 @@
                 <a href="{{ route('teachers.index') }}" class="block py-2 border-b">Teachers</a>
                 <a href="{{ route('notices.index') }}" class="block py-2 border-b">Notices</a>
                 <a href="{{ route('gallery.index') }}" class="block py-2 border-b">Gallery</a>
+                <a href="{{ route('results.index') }}" class="block py-2 border-b">Results</a>
+                <a href="{{ route('routine.index') }}" class="block py-2 border-b">Routine</a>
                 <a href="{{ route('contact') }}" class="block py-2 border-b">Contact</a>
                 <a href="{{ route('admission.create') }}" class="block py-2 text-gold font-semibold">Admission</a>
             </div>
@@ -85,6 +89,8 @@
                     <li><a href="{{ route('academics') }}" class="hover:text-white">Academics</a></li>
                     <li><a href="{{ route('admission.create') }}" class="hover:text-white">Admission</a></li>
                     <li><a href="{{ route('notices.index') }}" class="hover:text-white">Notices</a></li>
+                    <li><a href="{{ route('results.index') }}" class="hover:text-white">Student Results</a></li>
+                    <li><a href="{{ route('routine.index') }}" class="hover:text-white">Class Routine</a></li>
                 </ul>
             </div>
             <div>

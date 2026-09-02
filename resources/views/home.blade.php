@@ -2,28 +2,51 @@
 @section('title', 'Mirpur ML High School - Home')
 
 @section('content')
-{{-- Hero --}}
-<section class="relative bg-gradient-to-br from-primary to-primary-dark text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 grid md:grid-cols-2 gap-10 items-center">
-        <div>
-            <p class="text-gold font-semibold mb-3 tracking-wide">WELCOME TO</p>
-            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">Mirpur ML High School</h1>
-            <p class="text-lg text-gray-200 mb-8">Shaping bright futures through quality education, strong values, and a nurturing learning environment for every student.</p>
-            <div class="flex flex-wrap gap-4">
-                <a href="{{ route('admission.create') }}" class="bg-gold px-6 py-3 rounded-full font-semibold hover:opacity-90 transition">Apply for Admission</a>
-                <a href="{{ route('about') }}" class="border border-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-primary transition">Learn More</a>
-            </div>
-        </div>
-        <div class="hidden md:block">
-            <div class="bg-white/10 rounded-2xl p-8 backdrop-blur">
-                <div class="grid grid-cols-2 gap-6 text-center">
-                    <div><p class="text-4xl font-bold text-gold">1200+</p><p class="text-sm text-gray-200">Students</p></div>
-                    <div><p class="text-4xl font-bold text-gold">60+</p><p class="text-sm text-gray-200">Teachers</p></div>
-                    <div><p class="text-4xl font-bold text-gold">98%</p><p class="text-sm text-gray-200">Pass Rate</p></div>
-                    <div><p class="text-4xl font-bold text-gold">25+</p><p class="text-sm text-gray-200">Years of Service</p></div>
+{{-- Hero Slider --}}
+<section class="relative overflow-hidden bg-primary text-white">
+    <div id="hero-slider" class="relative min-h-[560px] md:min-h-[650px]">
+        @forelse($sliders as $index => $slide)
+            <article class="hero-slide absolute inset-0 transition-opacity duration-700 {{ $index === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none' }}" data-slide="{{ $index }}">
+                @if($slide->image_path)
+                    <img src="{{ asset('storage/'.$slide->image_path) }}" class="absolute inset-0 w-full h-full object-cover" alt="{{ $slide->title }}">
+                    <div class="absolute inset-0 bg-primary/75"></div>
+                @else
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary to-primary-dark"></div>
+                @endif
+                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[560px] md:min-h-[650px] flex items-center">
+                    <div class="max-w-3xl py-20">
+                        @if($slide->subtitle)<p class="text-gold font-bold uppercase tracking-[.2em] mb-4">{{ $slide->subtitle }}</p>@endif
+                        <h1 class="text-4xl md:text-6xl font-black leading-tight mb-5">{{ $slide->title }}</h1>
+                        @if($slide->description)<p class="text-lg md:text-xl text-gray-100 max-w-2xl mb-8">{{ $slide->description }}</p>@endif
+                        @if($slide->button_text && $slide->button_url)
+                            <a href="{{ $slide->button_url }}" class="inline-flex bg-gold text-white px-7 py-3.5 rounded-full font-bold hover:scale-105 transition">{{ $slide->button_text }}</a>
+                        @endif
+                    </div>
                 </div>
+            </article>
+        @empty
+            <article class="absolute inset-0 bg-gradient-to-br from-primary to-primary-dark">
+                <div class="max-w-7xl mx-auto px-4 min-h-[560px] flex items-center">
+                    <div class="max-w-3xl"><p class="text-gold font-bold uppercase tracking-[.2em] mb-4">WELCOME TO</p><h1 class="text-4xl md:text-6xl font-black mb-6">Mirpur ML High School</h1><p class="text-xl text-gray-100 mb-8">Shaping bright futures through quality education, strong values and a nurturing learning environment.</p><div class="flex flex-wrap gap-4"><a href="{{ route('admission.create') }}" class="bg-gold px-7 py-3 rounded-full font-bold">Apply for Admission</a><a href="{{ route('about') }}" class="border border-white px-7 py-3 rounded-full font-bold">Learn More</a></div></div>
+                </div>
+            </article>
+        @endforelse
+        @if($sliders->count() > 1)
+            <button id="hero-prev" type="button" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/30 hover:bg-black/50 text-2xl">‹</button>
+            <button id="hero-next" type="button" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/30 hover:bg-black/50 text-2xl">›</button>
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+                @foreach($sliders as $index => $slide)<button type="button" class="hero-dot w-3 h-3 rounded-full bg-white/50 {{ $index===0?'bg-gold':'' }}" data-dot="{{ $index }}"></button>@endforeach
             </div>
-        </div>
+        @endif
+    </div>
+</section>
+
+{{-- Quick Services --}}
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10">
+    <div class="grid md:grid-cols-3 gap-4">
+        <a href="{{ route('results.index') }}" class="bg-white rounded-2xl shadow-lg p-6 hover:-translate-y-1 transition"><div class="text-3xl mb-3">📊</div><h3 class="font-bold text-lg text-primary">Student Results</h3><p class="text-sm text-gray-500 mt-1">Check examination results online.</p></a>
+        <a href="{{ route('routine.index') }}" class="bg-white rounded-2xl shadow-lg p-6 hover:-translate-y-1 transition"><div class="text-3xl mb-3">🗓️</div><h3 class="font-bold text-lg text-primary">Class Routine</h3><p class="text-sm text-gray-500 mt-1">View class-wise weekly schedules.</p></a>
+        <a href="{{ route('admission.create') }}" class="bg-white rounded-2xl shadow-lg p-6 hover:-translate-y-1 transition"><div class="text-3xl mb-3">📝</div><h3 class="font-bold text-lg text-primary">Online Admission</h3><p class="text-sm text-gray-500 mt-1">Submit an admission application online.</p></a>
     </div>
 </section>
 

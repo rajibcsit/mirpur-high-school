@@ -1,0 +1,8 @@
+@extends('layouts.admin')
+@section('title','Class Routines') @section('page-title','Class Routines')
+@section('content')
+<div class="flex justify-end mb-6"><a href="{{ route('admin.routines.create') }}" class="bg-primary text-white px-5 py-2 rounded-lg">+ Add Routine</a></div>
+<div class="bg-white rounded-xl shadow overflow-hidden"><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-50"><tr><th class="text-left p-4">Class</th><th class="p-4">Year</th><th class="p-4">Day</th><th class="p-4">Time</th><th class="p-4">Subject</th><th class="p-4">Teacher</th><th class="p-4">Actions</th></tr></thead><tbody>
+@forelse($routines as $r)<tr class="border-t"><td class="p-4">{{ $r->class_name }}{{ $r->section?' - '.$r->section:'' }}</td><td class="p-4 text-center">{{ $r->academic_year }}</td><td class="p-4 text-center">{{ $r->day }}</td><td class="p-4 text-center whitespace-nowrap">{{ \Carbon\Carbon::parse($r->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($r->end_time)->format('h:i A') }}</td><td class="p-4 text-center font-semibold">{{ $r->subject }}</td><td class="p-4 text-center">{{ $r->teacher ?: '—' }}</td><td class="p-4 text-center"><a href="{{ route('admin.routines.edit',$r) }}" class="text-primary mr-3">Edit</a><form class="inline" method="POST" action="{{ route('admin.routines.destroy',$r) }}" onsubmit="return confirm('Delete routine entry?')">@csrf @method('DELETE')<button class="text-red-600">Delete</button></form></td></tr>@empty<tr><td colspan="7" class="p-8 text-center text-gray-500">No routine entries.</td></tr>@endforelse
+</tbody></table></div></div><div class="mt-5">{{ $routines->links() }}</div>
+@endsection
