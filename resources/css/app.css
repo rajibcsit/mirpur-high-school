@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #0f5132;
+    --color-primary-dark: #0a3d25;
+    --color-gold: #d4a017;
+}
+
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
