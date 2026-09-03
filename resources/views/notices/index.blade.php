@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Notices - Mirpur ML High School')
+@section('title', 'Notices - Mirpur High School')
 
 @section('content')
 <section class="bg-primary text-white py-16 text-center">

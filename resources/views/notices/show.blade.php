@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $notice->title . ' - Mirpur ML High School')
+@section('title', $notice->title . ' - Mirpur High School')
 
 @section('content')
 <section class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

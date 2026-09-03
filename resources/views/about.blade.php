@@ -1,16 +1,16 @@
 @extends('layouts.app')
-@section('title', 'About Us - Mirpur ML High School')
+@section('title', 'About Us - Mirpur High School')
 
 @section('content')
 <section class="bg-primary text-white py-16 text-center">
-    <h1 class="text-4xl font-bold">About Mirpur ML High School</h1>
+    <h1 class="text-4xl font-bold">About Mirpur High School</h1>
     <p class="text-gray-200 mt-2">Our history, mission, and vision</p>
 </section>
 
 <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
     <div>
         <h2 class="text-2xl font-bold text-primary mb-4">Our History</h2>
-        <p class="text-gray-700 leading-relaxed">Mirpur ML High School has served the community for over two decades, providing quality secondary education rooted in academic excellence and strong moral values. Starting with a handful of students, we have grown into one of the most trusted educational institutions in the Mirpur area, known for our disciplined environment and dedicated faculty.</p>
+        <p class="text-gray-700 leading-relaxed">Mirpur High School has served the community for over two decades, providing quality secondary education rooted in academic excellence and strong moral values. Starting with a handful of students, we have grown into one of the most trusted educational institutions in the Mirpur area, known for our disciplined environment and dedicated faculty.</p>
     </div>
 
     <div class="grid md:grid-cols-2 gap-8">

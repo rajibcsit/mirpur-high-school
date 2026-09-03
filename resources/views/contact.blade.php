@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Contact Us - Mirpur ML High School')
+@section('title', 'Contact Us - Mirpur High School')
 
 @section('content')
 <section class="bg-primary text-white py-16 text-center">
@@ -11,7 +11,7 @@
     <div>
         <h2 class="text-2xl font-bold text-primary mb-6">Get in Touch</h2>
         <div class="space-y-4 text-gray-700">
-            <p>📍 <strong>Address:</strong> Mirpur, Sadullapur Gaibandha</p>
+            <p>📍 <strong>Address:</strong> Mirpur, Dhaka, Bangladesh</p>
             <p>📞 <strong>Phone:</strong> +880-1XXX-XXXXXX</p>
             <p>✉️ <strong>Email:</strong> info@mirpurhighschool.edu</p>
             <p>🕐 <strong>Office Hours:</strong> Sunday - Thursday, 8:00 AM - 4:00 PM</p>

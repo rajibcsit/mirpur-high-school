@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Student Result Portal - Mirpur ML High School')
+@section('title','Student Result Portal - Mirpur High School')
 @section('content')
 <section class="bg-primary text-white py-14">
 <div class="max-w-5xl mx-auto px-4 text-center"><p class="text-gold font-semibold">ACADEMIC SERVICES</p><h1 class="text-4xl font-extrabold mt-2">Student Result Portal</h1><p class="text-gray-200 mt-3">Check your examination result using your student ID, roll and academic year.</p></div>

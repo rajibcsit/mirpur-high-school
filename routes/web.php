@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\ResultController as AdminResultController;
 use App\Http\Controllers\Admin\ClassRoutineController;
 use App\Http\Controllers\Admin\TeacherController as AdminTeacherController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ContactController;
@@ -62,6 +63,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->
 */
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
+    Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
 
     Route::resource('sliders', SliderController::class)->except(['show']);
     Route::resource('students', StudentController::class)->except(['show']);

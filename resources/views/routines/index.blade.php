@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Class Routine - Mirpur ML High School')
+@section('title','Class Routine - Mirpur High School')
 @section('content')
 <section class="bg-primary text-white py-14"><div class="max-w-7xl mx-auto px-4 text-center"><p class="text-gold font-semibold">ACADEMIC SERVICES</p><h1 class="text-4xl font-extrabold mt-2">Class Routine</h1><p class="text-gray-200 mt-3">View the latest class schedule by class and section.</p></div></section>
 <section class="max-w-7xl mx-auto px-4 py-10">

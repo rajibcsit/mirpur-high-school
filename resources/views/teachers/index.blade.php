@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'Our Teachers - Mirpur ML High School')
+@section('title', 'Our Teachers - Mirpur High School')
 
 @section('content')
 <section class="bg-primary text-white py-16 text-center">
     <h1 class="text-4xl font-bold">Our Teachers</h1>
-    <p class="text-gray-200 mt-2">Meet the dedicated educators of Mirpur ML High School</p>
+    <p class="text-gray-200 mt-2">Meet the dedicated educators of Mirpur High School</p>
 </section>
 
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

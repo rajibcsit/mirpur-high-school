@@ -1,7 +1,7 @@
 {
     "name": "mirpur/high-school",
     "type": "project",
-    "description": "Mirpur ML High School - Official Website with Admin Dashboard",
+    "description": "Mirpur High School - Official Website with Admin Dashboard",
     "keywords": [
         "laravel",
         "school",

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EventModel;
 use App\Models\Gallery;
 use App\Models\Notice;
+use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\Teacher;
 
@@ -17,8 +18,8 @@ class HomeController extends Controller
         $gallery = Gallery::latest()->take(8)->get();
         $teachers = Teacher::orderBy('display_order')->take(4)->get();
         $sliders = Slider::where('is_active', true)->orderBy('display_order')->get();
-
-        return view('home', compact('notices', 'events', 'gallery', 'teachers', 'sliders'));
+        $schoolSettings = Setting::first();
+        return view('home', compact('notices', 'events', 'gallery', 'teachers', 'sliders','schoolSettings'));
     }
 
     public function about()

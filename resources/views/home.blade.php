@@ -1,5 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Mirpur ML High School - Home')
+@php $homeSettings = \App\Models\Setting::first(); @endphp
+@section('title', ($homeSettings?->school_name ?: 'Mirpur High School') . ' - Home')
 
 @section('content')
 {{-- Hero Slider --}}
@@ -27,7 +28,7 @@
         @empty
             <article class="absolute inset-0 bg-gradient-to-br from-primary to-primary-dark">
                 <div class="max-w-7xl mx-auto px-4 min-h-[560px] flex items-center">
-                    <div class="max-w-3xl"><p class="text-gold font-bold uppercase tracking-[.2em] mb-4">WELCOME TO</p><h1 class="text-4xl md:text-6xl font-black mb-6">Mirpur ML High School</h1><p class="text-xl text-gray-100 mb-8">Shaping bright futures through quality education, strong values and a nurturing learning environment.</p><div class="flex flex-wrap gap-4"><a href="{{ route('admission.create') }}" class="bg-gold px-7 py-3 rounded-full font-bold">Apply for Admission</a><a href="{{ route('about') }}" class="border border-white px-7 py-3 rounded-full font-bold">Learn More</a></div></div>
+                    <div class="max-w-3xl"><p class="text-gold font-bold uppercase tracking-[.2em] mb-4">WELCOME TO</p><h1 class="text-4xl md:text-6xl font-black mb-6">{{ $schoolSettings?->school_name ?: 'Mirpur High School' }}</h1><p class="text-xl text-gray-100 mb-8">Shaping bright futures through quality education, strong values and a nurturing learning environment.</p><div class="flex flex-wrap gap-4"><a href="{{ route('admission.create') }}" class="bg-gold px-7 py-3 rounded-full font-bold">Apply for Admission</a><a href="{{ route('about') }}" class="border border-white px-7 py-3 rounded-full font-bold">Learn More</a></div></div>
                 </div>
             </article>
         @endforelse
@@ -136,7 +137,7 @@
 {{-- CTA --}}
 <section class="bg-gradient-to-r from-primary to-primary-dark text-white py-16 text-center">
     <div class="max-w-3xl mx-auto px-4">
-        <h2 class="text-3xl font-bold mb-4">Ready to Join Mirpur ML High School?</h2>
+        <h2 class="text-3xl font-bold mb-4">Ready to Join {{ $schoolSettings?->school_name ?: 'Mirpur High School' }}?</h2>
         <p class="text-gray-200 mb-8">Admissions for the new academic year are now open. Secure your child's future today.</p>
         <a href="{{ route('admission.create') }}" class="bg-gold px-8 py-3 rounded-full font-semibold hover:opacity-90 transition inline-block">Apply Now</a>
     </div>

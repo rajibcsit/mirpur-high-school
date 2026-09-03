@@ -1,4 +1,4 @@
-# Mirpur ML High School — Laravel 12 Feature Update
+# Mirpur High School — Laravel 12 Feature Update
 
 This update adds:
 - Homepage hero slider with admin CRUD and automatic 6-second rotation.
@@ -53,3 +53,32 @@ Demo result search:
 Your `User` model already uses a `role` field (`admin | editor`) and `isAdmin()`, so the existing `IsAdmin` middleware is compatible.
 
 The slider supports either uploaded images or a gradient fallback. Button URLs can be internal paths such as `/admission` or `/results`.
+
+
+## School Settings Update
+
+A new admin **Settings** module is included.
+
+Admin URL:
+`/admin/settings`
+
+The admin can update:
+- School name and short name
+- Tagline
+- Browser/SEO title and meta description
+- School logo and favicon
+- Email, phone and alternate phone
+- Address
+- Principal/Headmaster name
+- Facebook, YouTube, LinkedIn and website URLs
+- Footer description
+
+After extracting the project, run:
+
+```bash
+php artisan migrate
+php artisan storage:link
+php artisan optimize:clear
+```
+
+Then log in as an admin and open **Settings** from the admin sidebar.

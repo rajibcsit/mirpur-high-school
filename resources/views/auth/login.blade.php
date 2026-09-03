@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Mirpur ML High School</title>
+    <title>Admin Login - Mirpur High School</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gradient-to-br from-primary to-primary-dark min-h-screen flex items-center justify-center px-4">
     <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
         <div class="text-center mb-8">
             <div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xl mx-auto mb-3">MHS</div>
-            <h1 class="text-xl font-bold text-primary">Mirpur ML High School</h1>
+            <h1 class="text-xl font-bold text-primary">Mirpur High School</h1>
             <p class="text-sm text-gray-500">Admin Dashboard Login</p>
         </div>
 

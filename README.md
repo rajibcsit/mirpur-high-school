@@ -1,4 +1,4 @@
-# Mirpur ML High School — Laravel Website + Admin Dashboard
+# Mirpur High School — Laravel Website + Admin Dashboard
 
 A full dynamic school website built with **Laravel 11**, **Blade**, and **Tailwind CSS v4**, including a complete admin dashboard for content management.
 

@@ -9,6 +9,7 @@ use App\Models\Result;
 use App\Models\ClassRoutine;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Models\Setting;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,6 +17,19 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        Setting::updateOrCreate([], [
+            'school_name' => 'Mirpur ML High School',
+            'short_name' => 'MHS',
+            'tagline' => 'Excellence in Education',
+            'site_title' => 'Mirpur ML High School - Official Website',
+            'site_description' => 'Quality education, discipline, character development and a brighter future for every learner.',
+            'email' => 'info@mirpurhighschool.edu',
+            'phone' => '+880-1XXX-XXXXXX',
+            'address' => 'Mirpur, Sadullapur, Gaibandha',
+            'established_year' => '1962',
+            'footer_text' => 'Building a brighter future through quality education, discipline and character development.',
+        ]);
+
         User::create([
             'name' => 'Admin',
             'email' => 'admin@mirpurhighschool.edu',
@@ -40,18 +54,18 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Teacher::create([
-            'name' => 'Mohammad Rahman',
+            'name' => 'Monjur Hossain',
             'designation' => 'Headmaster',
-            'subject' => 'Administration',
-            'qualification' => 'M.Ed, University of Dhaka',
+            'subject' => 'Mathematics',
+            'qualification' => 'M.S.C, University of Dhaka',
             'display_order' => 1,
         ]);
 
         Teacher::create([
-            'name' => 'Nasrin Akter',
+            'name' => 'Md. Rokon Mia',
             'designation' => 'Assistant Headmistress',
-            'subject' => 'English',
-            'qualification' => 'MA in English, University of Dhaka',
+            'subject' => 'Social Science',
+            'qualification' => 'MA in Social Science, University of Dhaka',
             'display_order' => 2,
         ]);
 

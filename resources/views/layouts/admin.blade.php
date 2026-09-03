@@ -1,10 +1,14 @@
 <!DOCTYPE html>
+@php
+    $schoolSettings = \App\Models\Setting::first();
+    $schoolName = $schoolSettings?->school_name ?: 'Mirpur High School';
+@endphp
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin Dashboard') - Mirpur ML High School</title>
+    <title>@yield('title', 'Admin Dashboard') - {{ $schoolName }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -14,7 +18,7 @@
     <aside id="admin-sidebar" class="fixed md:static z-40 -translate-x-full md:translate-x-0 transition-transform w-64 bg-primary-dark text-white min-h-screen flex flex-col">
         <div class="p-6 border-b border-white/10">
             <p class="font-bold text-lg">MHS Admin</p>
-            <p class="text-xs text-gray-300">Mirpur ML High School</p>
+            <p class="text-xs text-gray-300">{{ $schoolName }}</p>
         </div>
         <nav class="flex-1 p-4 space-y-1 text-sm">
             @php
@@ -30,6 +34,7 @@
                     ['route' => 'admin.teachers.index', 'label' => 'Teachers', 'icon' => '👩‍🏫'],
                     ['route' => 'admin.admissions.index', 'label' => 'Admissions', 'icon' => '📝'],
                     ['route' => 'admin.messages.index', 'label' => 'Messages', 'icon' => '✉️'],
+                    ['route' => 'admin.settings.edit', 'label' => 'Settings', 'icon' => '⚙️'],
                 ];
             @endphp
             @foreach($links as $link)

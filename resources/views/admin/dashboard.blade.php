@@ -3,6 +3,9 @@
 @section('page-title', 'Dashboard Overview')
 
 @section('content')
+<div class="flex justify-end mb-6">
+    <a href="{{ route('admin.settings.edit') }}" class="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg font-semibold hover:opacity-90 transition">⚙️ Website Settings</a>
+</div>
 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
     @php
         $cards = [

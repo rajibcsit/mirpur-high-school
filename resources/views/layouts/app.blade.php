@@ -1,11 +1,22 @@
 <!DOCTYPE html>
+@php
+    $schoolSettings = \App\Models\Setting::first();
+    $schoolName = $schoolSettings?->school_name ?: 'Mirpur High School';
+    $shortName = $schoolSettings?->short_name ?: 'MHS';
+    $tagline = $schoolSettings?->tagline ?: 'Excellence in Education';
+    $siteTitle = $schoolSettings?->site_title ?: $schoolName;
+    $siteDescription = $schoolSettings?->site_description ?: 'Quality education, discipline and character development for every learner.';
+@endphp
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Mirpur ML High School')</title>
-    <meta name="description" content="Mirpur ML High School - Building a brighter future through quality education, discipline, and character development since our founding.">
+    <title>@yield('title', $siteTitle)</title>
+    <meta name="description" content="{{ $siteDescription }}">
+    @if($schoolSettings?->favicon_path)
+        <link rel="icon" href="{{ asset('storage/'.$schoolSettings->favicon_path) }}">
+    @endif
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased">
@@ -13,8 +24,12 @@
     {{-- Top info bar --}}
     <div class="bg-primary text-white text-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col sm:flex-row justify-between items-center gap-1">
-            <p>📍 Mirpur, Sadullapur Gaibandha</p>
-            <p>📞 +880-1XXX-XXXXXX &nbsp; | &nbsp; ✉️ info@mirpurhighschool.edu</p>
+            <p>📍 {{ $schoolSettings?->address ?: 'Mirpur, Dhaka, Bangladesh' }}</p>
+            <p>
+                @if($schoolSettings?->phone) 📞 {{ $schoolSettings->phone }} @endif
+                @if($schoolSettings?->phone && $schoolSettings?->email) &nbsp; | &nbsp; @endif
+                @if($schoolSettings?->email) ✉️ {{ $schoolSettings->email }} @endif
+            </p>
         </div>
     </div>
 
@@ -23,10 +38,14 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="{{ route('home') }}" class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg">MHS</div>
+                    @if($schoolSettings?->logo_path)
+                        <img src="{{ asset('storage/'.$schoolSettings->logo_path) }}" alt="{{ $schoolName }}" class="w-12 h-12 rounded-full object-contain bg-white border">
+                    @else
+                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg">{{ $shortName }}</div>
+                    @endif
                     <div>
-                        <p class="text-lg font-bold text-primary leading-tight">Mirpur ML High School</p>
-                        <p class="text-xs text-gray-500">Excellence in Education</p>
+                        <p class="text-lg font-bold text-primary leading-tight">{{ $schoolName }}</p>
+                        <p class="text-xs text-gray-500">{{ $tagline }}</p>
                     </div>
                 </a>
 
@@ -79,8 +98,8 @@
     <footer class="bg-primary-dark text-gray-300 mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-                <h3 class="text-white font-bold text-lg mb-3">Mirpur ML High School</h3>
-                <p class="text-sm">Committed to nurturing knowledge, discipline, and character in every student since our establishment.</p>
+                <h3 class="text-white font-bold text-lg mb-3">{{ $schoolName }}</h3>
+                <p class="text-sm">{{ $schoolSettings?->footer_text ?: $siteDescription }}</p>
             </div>
             <div>
                 <h4 class="text-white font-semibold mb-3">Quick Links</h4>
@@ -105,14 +124,14 @@
             <div>
                 <h4 class="text-white font-semibold mb-3">Contact</h4>
                 <ul class="space-y-2 text-sm">
-                    <li>📍 Mirpur, Sadullapur Gaibandha</li>
-                    <li>📞 +880-1XXX-XXXXXX</li>
-                    <li>✉️ info@mirpurhighschool.edu</li>
+                    <li>📍 {{ $schoolSettings?->address ?: 'Mirpur, Dhaka, Bangladesh' }}</li>
+                    @if($schoolSettings?->phone)<li>📞 {{ $schoolSettings->phone }}</li>@endif
+                    @if($schoolSettings?->email)<li>✉️ {{ $schoolSettings->email }}</li>@endif
                 </ul>
             </div>
         </div>
         <div class="border-t border-white/10 text-center text-sm py-4">
-            &copy; {{ date('Y') }} Mirpur ML High School. All rights reserved.
+            &copy; {{ date('Y') }} {{ $schoolName }}. All rights reserved.
         </div>
     </footer>
 </body>
