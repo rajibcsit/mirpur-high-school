@@ -1,45 +1,8 @@
 @extends('layouts.app')
-@section('title', 'About Us - Mirpur High School')
-
+@section('title', 'About Us - '.($schoolSettings?->school_name ?: 'Mirpur High School'))
 @section('content')
-<section class="bg-primary text-white py-16 text-center">
-    <h1 class="text-4xl font-bold">About Mirpur High School</h1>
-    <p class="text-gray-200 mt-2">Our history, mission, and vision</p>
-</section>
-
-<section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
-    <div>
-        <h2 class="text-2xl font-bold text-primary mb-4">Our History</h2>
-        <p class="text-gray-700 leading-relaxed">Mirpur High School has served the community for over two decades, providing quality secondary education rooted in academic excellence and strong moral values. Starting with a handful of students, we have grown into one of the most trusted educational institutions in the Mirpur area, known for our disciplined environment and dedicated faculty.</p>
-    </div>
-
-    <div class="grid md:grid-cols-2 gap-8">
-        <div class="bg-white p-8 rounded-xl shadow">
-            <h3 class="text-xl font-bold text-primary mb-3">Our Mission</h3>
-            <p class="text-gray-700">To provide holistic education that nurtures academic excellence, ethical values, and critical thinking, preparing students to become responsible citizens and future leaders.</p>
-        </div>
-        <div class="bg-white p-8 rounded-xl shadow">
-            <h3 class="text-xl font-bold text-primary mb-3">Our Vision</h3>
-            <p class="text-gray-700">To be a leading institution recognized for excellence in education, character building, and community service — empowering every student to reach their fullest potential.</p>
-        </div>
-    </div>
-
-    <div>
-        <h2 class="text-2xl font-bold text-primary mb-4">Why Choose Us</h2>
-        <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
-            @foreach([
-                ['icon' => '📚', 'title' => 'Quality Curriculum', 'desc' => 'National curriculum with modern teaching methods.'],
-                ['icon' => '👩‍🏫', 'title' => 'Experienced Faculty', 'desc' => 'Highly qualified and caring teachers.'],
-                ['icon' => '🏫', 'title' => 'Modern Facilities', 'desc' => 'Well-equipped classrooms, labs, and library.'],
-                ['icon' => '🏆', 'title' => 'Extracurriculars', 'desc' => 'Sports, debate, cultural and science clubs.'],
-            ] as $item)
-                <div class="bg-white p-6 rounded-xl shadow text-center">
-                    <div class="text-3xl mb-3">{{ $item['icon'] }}</div>
-                    <h4 class="font-semibold mb-1">{{ $item['title'] }}</h4>
-                    <p class="text-sm text-gray-500">{{ $item['desc'] }}</p>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</section>
+<section class="bg-primary text-white"><div class="site-container py-20"><span class="eyebrow">Who We Are</span><h1 class="mt-4 text-4xl md:text-6xl font-black">{{ $schoolSettings?->about_title ?: 'About Our School' }}</h1><p class="mt-5 text-emerald-50 text-lg max-w-3xl">{{ $schoolSettings?->about_intro ?: 'A community where curiosity, character and academic excellence come together.' }}</p></div></section>
+<section class="site-container py-20 grid lg:grid-cols-12 gap-12 items-center"><div class="lg:col-span-6">@if($schoolSettings?->about_image_path)<img src="{{ asset('storage/'.$schoolSettings->about_image_path) }}" class="w-full h-[420px] object-cover rounded-[2rem] shadow-xl" alt="About our school">@else<div class="w-full h-[420px] rounded-[2rem] bg-gradient-to-br from-primary/15 to-emerald-100 flex items-center justify-center text-8xl">🏫</div>@endif</div><div class="lg:col-span-6"><span class="section-kicker">Our Story</span><h2 class="section-title">Growing learners, shaping futures.</h2><p class="section-copy whitespace-pre-line">{{ $schoolSettings?->about_history ?: 'Our school is committed to providing a supportive learning environment where students are encouraged to think independently, act responsibly and pursue excellence. Our dedicated teachers and school community work together to prepare learners for a changing world.' }}</p></div></section>
+<section class="bg-slate-100"><div class="site-container py-20 grid md:grid-cols-2 gap-6"><div class="mission-card"><span class="text-4xl">🎯</span><h3>Our Mission</h3><p>{{ $schoolSettings?->mission ?: 'To provide holistic education that nurtures academic excellence, ethical values, critical thinking and responsible citizenship.' }}</p></div><div class="mission-card"><span class="text-4xl">🌱</span><h3>Our Vision</h3><p>{{ $schoolSettings?->vision ?: 'To empower every learner with the knowledge, confidence and character to reach their fullest potential.' }}</p></div></div></section>
+<section class="site-container py-20"><span class="section-kicker">Why Choose Us</span><h2 class="section-title">More than a classroom.</h2><div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">@foreach([['📚','Quality Curriculum','Engaging learning aligned with strong academic foundations.'],['👩‍🏫','Dedicated Faculty','Supportive teachers who know that every learner is different.'],['💻','Digital Learning','Technology-enabled learning for modern skills and confidence.'],['🏆','Student Development','Sports, culture, clubs and leadership beyond textbooks.']] as [$icon,$title,$desc])<div class="feature-card"><div class="text-4xl mb-5">{{ $icon }}</div><h3>{{ $title }}</h3><p>{{ $desc }}</p></div>@endforeach</div></section>
 @endsection

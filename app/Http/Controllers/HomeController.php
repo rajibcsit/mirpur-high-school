@@ -19,12 +19,19 @@ class HomeController extends Controller
         $teachers = Teacher::orderBy('display_order')->take(4)->get();
         $sliders = Slider::where('is_active', true)->orderBy('display_order')->get();
         $schoolSettings = Setting::first();
-        return view('home', compact('notices', 'events', 'gallery', 'teachers', 'sliders','schoolSettings'));
+        $stats = [
+            'students' => $schoolSettings?->stat_students ?: '500+',
+            'teachers' => $schoolSettings?->stat_teachers ?: '30+',
+            'years' => $schoolSettings?->stat_years ?: '25+',
+            'achievements' => $schoolSettings?->stat_achievements ?: '50+',
+        ];
+        return view('home', compact('notices', 'events', 'gallery', 'teachers', 'sliders','schoolSettings','stats'));
     }
 
     public function about()
     {
-        return view('about');
+        $schoolSettings = Setting::first();
+        return view('about', compact('schoolSettings'));
     }
 
     public function academics()

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AboutController as AdminAboutController;
 use App\Http\Controllers\Admin\AdmissionController as AdminAdmissionController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -63,6 +64,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->
 */
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/about', [AdminAboutController::class, 'edit'])->name('about.edit');
+    Route::put('/about', [AdminAboutController::class, 'update'])->name('about.update');
     Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
     Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
 

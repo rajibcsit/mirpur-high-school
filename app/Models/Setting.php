@@ -25,5 +25,8 @@ class Setting extends Model
         'established_year',
         'principal_name',
         'footer_text',
+        'about_title', 'about_intro', 'about_history', 'about_image_path',
+        'mission', 'vision', 'principal_message_title', 'principal_message', 'principal_photo_path',
+        'stat_students', 'stat_teachers', 'stat_years', 'stat_achievements',
     ];
 }

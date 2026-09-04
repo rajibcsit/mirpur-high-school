@@ -1,145 +1,45 @@
 @extends('layouts.app')
-@php $homeSettings = \App\Models\Setting::first(); @endphp
-@section('title', ($homeSettings?->school_name ?: 'Mirpur High School') . ' - Home')
-
+@section('title', ($schoolSettings?->school_name ?: 'Mirpur High School').' - Home')
 @section('content')
-{{-- Hero Slider --}}
-<section class="relative overflow-hidden bg-primary text-white">
-    <div id="hero-slider" class="relative min-h-[560px] md:min-h-[650px]">
+<section class="relative overflow-hidden bg-slate-950 text-white">
+    <div id="hero-slider" class="relative min-h-[620px] lg:min-h-[700px]">
         @forelse($sliders as $index => $slide)
-            <article class="hero-slide absolute inset-0 transition-opacity duration-700 {{ $index === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none' }}" data-slide="{{ $index }}">
-                @if($slide->image_path)
-                    <img src="{{ asset('storage/'.$slide->image_path) }}" class="absolute inset-0 w-full h-full object-cover" alt="{{ $slide->title }}">
-                    <div class="absolute inset-0 bg-primary/75"></div>
-                @else
-                    <div class="absolute inset-0 bg-gradient-to-br from-primary to-primary-dark"></div>
-                @endif
-                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[560px] md:min-h-[650px] flex items-center">
-                    <div class="max-w-3xl py-20">
-                        @if($slide->subtitle)<p class="text-gold font-bold uppercase tracking-[.2em] mb-4">{{ $slide->subtitle }}</p>@endif
-                        <h1 class="text-4xl md:text-6xl font-black leading-tight mb-5">{{ $slide->title }}</h1>
-                        @if($slide->description)<p class="text-lg md:text-xl text-gray-100 max-w-2xl mb-8">{{ $slide->description }}</p>@endif
-                        @if($slide->button_text && $slide->button_url)
-                            <a href="{{ $slide->button_url }}" class="inline-flex bg-gold text-white px-7 py-3.5 rounded-full font-bold hover:scale-105 transition">{{ $slide->button_text }}</a>
-                        @endif
-                    </div>
-                </div>
+            <article class="hero-slide absolute inset-0 transition-all duration-700 {{ $index===0?'opacity-100':'opacity-0 pointer-events-none' }}" data-slide="{{ $index }}">
+                @if($slide->image_path)<img src="{{ asset('storage/'.$slide->image_path) }}" class="absolute inset-0 w-full h-full object-cover" alt="{{ $slide->title }}"><div class="absolute inset-0 bg-slate-950/65"></div>@else<div class="absolute inset-0 hero-fallback"></div>@endif
+                <div class="site-container relative min-h-[620px] lg:min-h-[700px] flex items-center"><div class="max-w-3xl pt-12">
+                    <span class="eyebrow">{{ $slide->subtitle ?: 'Welcome to our school' }}</span><h1 class="mt-5 text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.05]">{{ $slide->title }}</h1>
+                    @if($slide->description)<p class="mt-6 text-lg text-slate-200 leading-8 max-w-2xl">{{ $slide->description }}</p>@endif
+                    <div class="mt-8 flex flex-wrap gap-3"><a href="{{ $slide->button_url ?: route('admission.create') }}" class="btn-gold">{{ $slide->button_text ?: 'Start Your Journey' }} →</a><a href="{{ route('about') }}" class="btn-glass">Discover Our School</a></div>
+                </div></div>
             </article>
         @empty
-            <article class="absolute inset-0 bg-gradient-to-br from-primary to-primary-dark">
-                <div class="max-w-7xl mx-auto px-4 min-h-[560px] flex items-center">
-                    <div class="max-w-3xl"><p class="text-gold font-bold uppercase tracking-[.2em] mb-4">WELCOME TO</p><h1 class="text-4xl md:text-6xl font-black mb-6">{{ $schoolSettings?->school_name ?: 'Mirpur High School' }}</h1><p class="text-xl text-gray-100 mb-8">Shaping bright futures through quality education, strong values and a nurturing learning environment.</p><div class="flex flex-wrap gap-4"><a href="{{ route('admission.create') }}" class="bg-gold px-7 py-3 rounded-full font-bold">Apply for Admission</a><a href="{{ route('about') }}" class="border border-white px-7 py-3 rounded-full font-bold">Learn More</a></div></div>
-                </div>
-            </article>
+            <article class="absolute inset-0 hero-fallback"><div class="site-container min-h-[620px] lg:min-h-[700px] flex items-center"><div class="max-w-3xl"><span class="eyebrow">{{ $schoolSettings?->tagline ?: 'Excellence in Education' }}</span><h1 class="mt-5 text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.05]">Building confident learners for a brighter tomorrow.</h1><p class="mt-6 text-lg text-slate-200 leading-8 max-w-2xl">A safe, inspiring and future-focused learning environment where academic excellence meets character, creativity and leadership.</p><div class="mt-8 flex flex-wrap gap-3"><a href="{{ route('admission.create') }}" class="btn-gold">Apply for Admission →</a><a href="{{ route('about') }}" class="btn-glass">Learn More</a></div></div></div></article>
         @endforelse
-        @if($sliders->count() > 1)
-            <button id="hero-prev" type="button" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/30 hover:bg-black/50 text-2xl">‹</button>
-            <button id="hero-next" type="button" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/30 hover:bg-black/50 text-2xl">›</button>
-            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-                @foreach($sliders as $index => $slide)<button type="button" class="hero-dot w-3 h-3 rounded-full bg-white/50 {{ $index===0?'bg-gold':'' }}" data-dot="{{ $index }}"></button>@endforeach
-            </div>
-        @endif
+        @if($sliders->count()>1)<button id="hero-prev" class="hero-arrow left-4">‹</button><button id="hero-next" class="hero-arrow right-4">›</button><div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">@foreach($sliders as $index=>$slide)<button class="hero-dot w-2.5 h-2.5 rounded-full bg-white/40 {{ $index===0?'bg-white':'' }}" data-dot="{{ $index }}"></button>@endforeach</div>@endif
     </div>
 </section>
 
-{{-- Quick Services --}}
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10">
-    <div class="grid md:grid-cols-3 gap-4">
-        <a href="{{ route('results.index') }}" class="bg-white rounded-2xl shadow-lg p-6 hover:-translate-y-1 transition"><div class="text-3xl mb-3">📊</div><h3 class="font-bold text-lg text-primary">Student Results</h3><p class="text-sm text-gray-500 mt-1">Check examination results online.</p></a>
-        <a href="{{ route('routine.index') }}" class="bg-white rounded-2xl shadow-lg p-6 hover:-translate-y-1 transition"><div class="text-3xl mb-3">🗓️</div><h3 class="font-bold text-lg text-primary">Class Routine</h3><p class="text-sm text-gray-500 mt-1">View class-wise weekly schedules.</p></a>
-        <a href="{{ route('admission.create') }}" class="bg-white rounded-2xl shadow-lg p-6 hover:-translate-y-1 transition"><div class="text-3xl mb-3">📝</div><h3 class="font-bold text-lg text-primary">Online Admission</h3><p class="text-sm text-gray-500 mt-1">Submit an admission application online.</p></a>
-    </div>
-</section>
+<section class="site-container relative z-10 -mt-10"><div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    @foreach([['📢','Latest Notices','Stay updated with school announcements.',route('notices.index')],['📊','Student Results','Check academic performance online.',route('results.index')],['🗓️','Class Routine','Find your class schedule quickly.',route('routine.index')],['📝','Online Admission','Apply for admission with ease.',route('admission.create')]] as [$icon,$title,$desc,$url])
+    <a href="{{ $url }}" class="quick-card"><span class="quick-icon">{{ $icon }}</span><div><h3>{{ $title }}</h3><p>{{ $desc }}</p></div><span class="text-primary text-lg">→</span></a>
+    @endforeach
+</div></section>
 
-{{-- Notices --}}
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="flex justify-between items-center mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-primary">Latest Notices</h2>
-        <a href="{{ route('notices.index') }}" class="text-primary font-semibold hover:underline">View All →</a>
-    </div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @forelse($notices as $notice)
-            <a href="{{ route('notices.show', $notice->slug) }}" class="block bg-white rounded-xl shadow p-6 hover:shadow-lg transition border-l-4 border-gold">
-                <span class="inline-block text-xs font-semibold uppercase text-primary bg-primary/10 px-2 py-1 rounded mb-3">{{ $notice->category }}</span>
-                <h3 class="font-semibold text-lg mb-2 line-clamp-2">{{ $notice->title }}</h3>
-                <p class="text-sm text-gray-500">{{ $notice->published_at?->format('d M, Y') }}</p>
-            </a>
-        @empty
-            <p class="text-gray-500">No notices published yet.</p>
-        @endforelse
-    </div>
-</section>
+<section class="site-container py-20"><div class="grid lg:grid-cols-12 gap-10 items-center"><div class="lg:col-span-5"><span class="section-kicker">Our School</span><h2 class="section-title">A place to learn, grow and lead.</h2><p class="section-copy">{{ $schoolSettings?->about_intro ?: 'We believe every student deserves an environment that inspires curiosity, builds confidence and develops the values needed to make a positive impact.' }}</p><a href="{{ route('about') }}" class="inline-flex mt-6 font-bold text-primary hover:gap-3 transition-all">Read our story <span class="ml-2">→</span></a></div><div class="lg:col-span-7 grid sm:grid-cols-2 gap-5"><div class="feature-card"><div class="feature-number">01</div><h3>Academic Excellence</h3><p>Strong foundations, engaging lessons and a culture of continuous improvement.</p></div><div class="feature-card"><div class="feature-number">02</div><h3>Character & Values</h3><p>Respect, discipline, responsibility and empathy are part of everyday learning.</p></div><div class="feature-card"><div class="feature-number">03</div><h3>Future Ready</h3><p>Technology, creativity and communication skills help students prepare for tomorrow.</p></div><div class="feature-card"><div class="feature-number">04</div><h3>Beyond the Classroom</h3><p>Sports, culture, clubs and events create confident and well-rounded learners.</p></div></div></div></section>
 
-{{-- Upcoming Events --}}
-@if($events->count())
-<section class="bg-white py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-primary mb-8">Upcoming Events</h2>
-        <div class="grid md:grid-cols-3 gap-6">
-            @foreach($events as $event)
-                <div class="border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    @if($event->cover_image)
-                        <img src="{{ asset('storage/' . $event->cover_image) }}" class="w-full h-40 object-cover" alt="{{ $event->title }}">
-                    @else
-                        <div class="w-full h-40 bg-primary/10 flex items-center justify-center text-primary text-3xl">📅</div>
-                    @endif
-                    <div class="p-5">
-                        <p class="text-gold font-semibold text-sm mb-1">{{ $event->event_date->format('d M, Y') }} @if($event->event_time) · {{ $event->event_time }} @endif</p>
-                        <h3 class="font-semibold text-lg mb-1">{{ $event->title }}</h3>
-                        <p class="text-sm text-gray-500 line-clamp-2">{{ $event->description }}</p>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</section>
+<section class="bg-primary text-white"><div class="site-container py-14 grid grid-cols-2 lg:grid-cols-4 gap-8">@foreach([[$stats['students'],'Students'],[$stats['teachers'],'Teachers'],[$stats['years'],'Years of Excellence'],[$stats['achievements'],'Achievements']] as [$value,$label])<div class="text-center"><div class="text-4xl md:text-5xl font-black">{{ $value }}</div><div class="mt-2 text-sm text-emerald-100">{{ $label }}</div></div>@endforeach</div></section>
+
+<section class="site-container py-20"><div class="flex items-end justify-between gap-4 mb-8"><div><span class="section-kicker">Stay Informed</span><h2 class="section-title !mb-0">Latest Notices</h2></div><a href="{{ route('notices.index') }}" class="btn-secondary">View All</a></div><div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">@forelse($notices as $notice)<a href="{{ route('notices.show',$notice->slug) }}" class="content-card"><div class="text-xs font-bold text-primary">{{ optional($notice->published_at)->format('d M Y') }}</div><h3>{{ $notice->title }}</h3><p>{{ Str::limit(strip_tags($notice->content),110) }}</p><span class="font-bold text-primary">Read notice →</span></a>@empty<div class="col-span-full empty-card">No notices have been published yet.</div>@endforelse</div></section>
+
+@if($schoolSettings?->principal_message || $schoolSettings?->principal_name)
+<section class="bg-white border-y border-slate-200"><div class="site-container py-20 grid lg:grid-cols-12 gap-12 items-center"><div class="lg:col-span-4 flex justify-center">@if($schoolSettings->principal_photo_path)<img src="{{ asset('storage/'.$schoolSettings->principal_photo_path) }}" class="w-72 h-80 object-cover rounded-[2rem] shadow-xl" alt="{{ $schoolSettings->principal_name }}">@else<div class="w-72 h-80 rounded-[2rem] bg-primary/10 flex items-center justify-center text-7xl">👨‍🏫</div>@endif</div><div class="lg:col-span-8"><span class="section-kicker">Leadership</span><h2 class="section-title">{{ $schoolSettings->principal_message_title ?: "Principal's Message" }}</h2><p class="section-copy whitespace-pre-line">{{ $schoolSettings->principal_message ?: 'Welcome to our school community. Together, we are committed to creating meaningful learning experiences and helping every student discover their potential.' }}</p><div class="mt-6 font-bold text-slate-900">{{ $schoolSettings->principal_name ?: 'Principal' }}</div></div></div></section>
 @endif
 
-{{-- Teachers --}}
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="flex justify-between items-center mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-primary">Meet Our Teachers</h2>
-        <a href="{{ route('teachers.index') }}" class="text-primary font-semibold hover:underline">View All →</a>
-    </div>
-    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
-        @foreach($teachers as $teacher)
-            <div class="bg-white rounded-xl shadow p-6 text-center hover:shadow-lg transition">
-                @if($teacher->photo_path)
-                    <img src="{{ asset('storage/' . $teacher->photo_path) }}" class="w-24 h-24 rounded-full mx-auto object-cover mb-4" alt="{{ $teacher->name }}">
-                @else
-                    <div class="w-24 h-24 rounded-full mx-auto mb-4 bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold">{{ substr($teacher->name, 0, 1) }}</div>
-                @endif
-                <h3 class="font-semibold">{{ $teacher->name }}</h3>
-                <p class="text-sm text-gold">{{ $teacher->designation }}</p>
-                <p class="text-xs text-gray-500">{{ $teacher->subject }}</p>
-            </div>
-        @endforeach
-    </div>
-</section>
+<section class="site-container py-20"><div class="flex items-end justify-between gap-4 mb-8"><div><span class="section-kicker">Campus Life</span><h2 class="section-title !mb-0">Moments from our school</h2></div><a href="{{ route('gallery.index') }}" class="btn-secondary">View Gallery</a></div><div class="grid grid-cols-2 md:grid-cols-4 gap-4">@forelse($gallery as $image)<a href="{{ route('gallery.index') }}" class="gallery-card"><img src="{{ asset('storage/'.$image->image_path) }}" alt="{{ $image->title ?: 'School gallery' }}"><div>{{ $image->title ?: 'School Life' }}</div></a>@empty<div class="col-span-full empty-card">Add campus photos from the admin Gallery module.</div>@endforelse</div></section>
 
-{{-- Gallery preview --}}
-@if($gallery->count())
-<section class="bg-white py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl md:text-3xl font-bold text-primary">School Gallery</h2>
-            <a href="{{ route('gallery.index') }}" class="text-primary font-semibold hover:underline">View All →</a>
-        </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            @foreach($gallery as $image)
-                <img src="{{ asset('storage/' . $image->image_path) }}" class="w-full h-40 object-cover rounded-lg hover:opacity-90 transition" alt="{{ $image->title }}">
-            @endforeach
-        </div>
-    </div>
-</section>
-@endif
+<section class="bg-slate-100"><div class="site-container py-20"><div class="flex items-end justify-between gap-4 mb-8"><div><span class="section-kicker">Our Faculty</span><h2 class="section-title !mb-0">Meet our teachers</h2></div><a href="{{ route('teachers.index') }}" class="btn-secondary">All Teachers</a></div><div class="grid grid-cols-2 md:grid-cols-4 gap-5">@forelse($teachers as $teacher)<a href="{{ route('teachers.index') }}" class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg transition">@if($teacher->photo_path)<img src="{{ asset('storage/'.$teacher->photo_path) }}" class="w-full aspect-square object-cover" alt="{{ $teacher->name }}">@else<div class="w-full aspect-square bg-primary/10 flex items-center justify-center text-6xl">👩‍🏫</div>@endif<div class="p-5"><h3 class="font-black text-slate-900">{{ $teacher->name }}</h3><p class="text-sm text-primary mt-1">{{ $teacher->designation ?: 'Teacher' }}</p>@if($teacher->subject)<p class="text-xs text-slate-500 mt-2">{{ $teacher->subject }}</p>@endif</div></a>@empty<div class="col-span-full empty-card">Add teachers from the admin Teachers module to showcase your faculty here.</div>@endforelse</div></div></section>
 
-{{-- CTA --}}
-<section class="bg-gradient-to-r from-primary to-primary-dark text-white py-16 text-center">
-    <div class="max-w-3xl mx-auto px-4">
-        <h2 class="text-3xl font-bold mb-4">Ready to Join {{ $schoolSettings?->school_name ?: 'Mirpur High School' }}?</h2>
-        <p class="text-gray-200 mb-8">Admissions for the new academic year are now open. Secure your child's future today.</p>
-        <a href="{{ route('admission.create') }}" class="bg-gold px-8 py-3 rounded-full font-semibold hover:opacity-90 transition inline-block">Apply Now</a>
-    </div>
-</section>
+@if($events->count())<section class="bg-slate-100"><div class="site-container py-20"><div class="flex items-end justify-between gap-4 mb-8"><div><span class="section-kicker">What's Happening</span><h2 class="section-title !mb-0">Upcoming Events</h2></div></div><div class="grid md:grid-cols-3 gap-6">@foreach($events as $event)<div class="event-card">@if($event->cover_image)<img src="{{ asset('storage/'.$event->cover_image) }}" alt="{{ $event->title }}">@endif<div class="p-6"><div class="text-sm font-bold text-primary">{{ optional($event->event_date)->format('d M Y') }}</div><h3>{{ $event->title }}</h3><p>{{ Str::limit($event->description,100) }}</p>@if($event->location)<div class="text-xs text-slate-500 mt-4">📍 {{ $event->location }}</div>@endif</div></div>@endforeach</div></div></section>@endif
+
+<section class="site-container py-20"><div class="cta-card"><div><span class="text-emerald-200 font-bold uppercase tracking-[.2em] text-xs">Admissions Open</span><h2 class="text-3xl md:text-5xl font-black mt-3">Give your child a place to thrive.</h2><p class="mt-4 text-emerald-50 max-w-2xl">Start the admission process online and take the first step toward an inspiring school journey.</p></div><a href="{{ route('admission.create') }}" class="btn-gold shrink-0">Apply Now →</a></div></section>
 @endsection

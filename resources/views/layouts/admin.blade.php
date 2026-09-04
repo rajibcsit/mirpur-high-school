@@ -11,7 +11,7 @@
     <title>@yield('title', 'Admin Dashboard') - {{ $schoolName }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-slate-100 text-slate-800">
 <div class="flex min-h-screen">
 
     {{-- Sidebar --}}
@@ -24,6 +24,7 @@
             @php
                 $links = [
                     ['route' => 'admin.dashboard', 'label' => 'Dashboard', 'icon' => '🏠'],
+                    ['route' => 'admin.about.edit', 'label' => 'About Page', 'icon' => '📖'],
                     ['route' => 'admin.sliders.index', 'label' => 'Hero Sliders', 'icon' => '🖼️'],
                     ['route' => 'admin.students.index', 'label' => 'Students', 'icon' => '🎓'],
                     ['route' => 'admin.results.index', 'label' => 'Results', 'icon' => '📊'],
