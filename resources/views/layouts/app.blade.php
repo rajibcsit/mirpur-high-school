@@ -55,7 +55,7 @@
                     <a href="{{ route('academics') }}" class="hover:text-primary {{ request()->routeIs('academics') ? 'text-primary font-semibold' : '' }}">Academics</a>
                     <a href="{{ route('teachers.index') }}" class="hover:text-primary {{ request()->routeIs('teachers.index') ? 'text-primary font-semibold' : '' }}">Teachers</a>
                     <a href="{{ route('notices.index') }}" class="hover:text-primary {{ request()->routeIs('notices.*') ? 'text-primary font-semibold' : '' }}">Notices</a>
-                    <a href="{{ route('news.index') }}" class="hover:text-primary {{ request()->routeIs('news.*') ? 'text-primary font-semibold' : '' }}">News</a>
+                    {{-- <a href="{{ route('news.index') }}" class="hover:text-primary {{ request()->routeIs('news.*') ? 'text-primary font-semibold' : '' }}">News</a> --}}
                     <a href="{{ route('gallery.index') }}" class="hover:text-primary {{ request()->routeIs('gallery.index') ? 'text-primary font-semibold' : '' }}">Gallery</a>
                     <a href="{{ route('results.index') }}" class="hover:text-primary {{ request()->routeIs('results.index') ? 'text-primary font-semibold' : '' }}">Results</a>
                     <a href="{{ route('routine.index') }}" class="hover:text-primary {{ request()->routeIs('routine.index') ? 'text-primary font-semibold' : '' }}">Routine</a>
@@ -73,7 +73,7 @@
                 <a href="{{ route('academics') }}" class="block py-2 border-b">Academics</a>
                 <a href="{{ route('teachers.index') }}" class="block py-2 border-b">Teachers</a>
                 <a href="{{ route('notices.index') }}" class="block py-2 border-b">Notices</a>
-                <a href="{{ route('news.index') }}" class="block py-2 border-b">News</a>
+                {{-- <a href="{{ route('news.index') }}" class="block py-2 border-b">News</a> --}}
                 <a href="{{ route('gallery.index') }}" class="block py-2 border-b">Gallery</a>
                 <a href="{{ route('results.index') }}" class="block py-2 border-b">Results</a>
                 <a href="{{ route('routine.index') }}" class="block py-2 border-b">Routine</a>
