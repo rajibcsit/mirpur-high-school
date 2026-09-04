@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\AboutController as AdminAboutController;
 use App\Http\Controllers\Admin\AdmissionController as AdminAdmissionController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -11,6 +10,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\ResultController as AdminResultController;
 use App\Http\Controllers\Admin\ClassRoutineController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\TeacherController as AdminTeacherController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\AdmissionController;
@@ -19,6 +19,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\TeacherController;
@@ -37,6 +38,8 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 
 Route::get('/notices', [NoticeController::class, 'index'])->name('notices.index');
 Route::get('/notices/{slug}', [NoticeController::class, 'show'])->name('notices.show');
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
 
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers.index');
@@ -64,8 +67,6 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->
 */
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/about', [AdminAboutController::class, 'edit'])->name('about.edit');
-    Route::put('/about', [AdminAboutController::class, 'update'])->name('about.update');
     Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
     Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
 
@@ -75,6 +76,7 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::resource('routines', ClassRoutineController::class)->except(['show']);
 
     Route::resource('notices', AdminNoticeController::class)->except(['show']);
+    Route::resource('news', AdminNewsController::class)->except(['show']);
     Route::resource('events', EventController::class)->except(['show']);
 
     Route::resource('gallery', AdminGalleryController::class)->only(['index', 'create', 'store', 'destroy']);

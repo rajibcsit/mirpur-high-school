@@ -7,51 +7,134 @@
     $siteTitle = $schoolSettings?->site_title ?: $schoolName;
     $siteDescription = $schoolSettings?->site_description ?: 'Quality education, discipline and character development for every learner.';
 @endphp
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}"><title>@yield('title', $siteTitle)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('title', $siteTitle)</title>
     <meta name="description" content="{{ $siteDescription }}">
-    @if($schoolSettings?->favicon_path)<link rel="icon" href="{{ asset('storage/'.$schoolSettings->favicon_path) }}">@endif
+    @if($schoolSettings?->favicon_path)
+        <link rel="icon" href="{{ asset('storage/'.$schoolSettings->favicon_path) }}">
+    @endif
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased">
-    <div class="bg-slate-950 text-slate-200 text-xs sm:text-sm">
-        <div class="site-container flex flex-col sm:flex-row justify-between gap-2 py-2.5">
-            <span>📍 {{ $schoolSettings?->address ?: 'Mirpur, Dhaka, Bangladesh' }}</span>
-            <span>@if($schoolSettings?->phone)📞 {{ $schoolSettings->phone }} @endif @if($schoolSettings?->email)<span class="mx-2 text-slate-600">|</span>✉ {{ $schoolSettings->email }}@endif</span>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    {{-- Top info bar --}}
+    <div class="bg-primary text-white text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col sm:flex-row justify-between items-center gap-1">
+            <p>📍 {{ $schoolSettings?->address ?: 'Mirpur, Dhaka, Bangladesh' }}</p>
+            <p>
+                @if($schoolSettings?->phone) 📞 {{ $schoolSettings->phone }} @endif
+                @if($schoolSettings?->phone && $schoolSettings?->email) &nbsp; | &nbsp; @endif
+                @if($schoolSettings?->email) ✉️ {{ $schoolSettings->email }} @endif
+            </p>
         </div>
     </div>
-    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200">
-        <div class="site-container h-20 flex items-center justify-between">
-            <a href="{{ route('home') }}" class="flex items-center gap-3 min-w-0">
-                @if($schoolSettings?->logo_path)<img src="{{ asset('storage/'.$schoolSettings->logo_path) }}" class="w-12 h-12 object-contain rounded-xl" alt="{{ $schoolName }}">@else<div class="brand-mark">{{ $shortName }}</div>@endif
-                <div class="min-w-0"><div class="font-black text-primary text-base sm:text-lg truncate">{{ $schoolName }}</div><div class="text-xs text-slate-500 truncate">{{ $tagline }}</div></div>
-            </a>
-            <nav class="hidden lg:flex items-center gap-6 text-sm font-semibold">
-                @foreach([['home','Home'],['about','About'],['academics','Academics'],['teachers.index','Teachers'],['notices.index','Notices'],['gallery.index','Gallery'],['results.index','Results'],['routine.index','Routine'],['contact','Contact']] as [$route,$label])
-                    <a href="{{ route($route) }}" class="nav-link {{ request()->routeIs($route) || ($route==='notices.index' && request()->routeIs('notices.*')) ? 'active' : '' }}">{{ $label }}</a>
-                @endforeach
-                <a href="{{ route('admission.create') }}" class="btn-primary py-2.5 px-5">Admission</a>
-            </nav>
-            <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-xl border border-slate-200 text-slate-700 text-xl" aria-label="Menu">☰</button>
-        </div>
-        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-100 bg-white">
-            <div class="site-container py-3 grid grid-cols-2 gap-1">
-                @foreach([['home','Home'],['about','About'],['academics','Academics'],['teachers.index','Teachers'],['notices.index','Notices'],['gallery.index','Gallery'],['results.index','Results'],['routine.index','Routine'],['contact','Contact'],['admission.create','Admission']] as [$route,$label])
-                    <a href="{{ route($route) }}" class="px-4 py-3 rounded-xl hover:bg-slate-50 font-semibold">{{ $label }}</a>
-                @endforeach
+
+    {{-- Navbar --}}
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="{{ route('home') }}" class="flex items-center gap-3">
+                    @if($schoolSettings?->logo_path)
+                        <img src="{{ asset('storage/'.$schoolSettings->logo_path) }}" alt="{{ $schoolName }}" class="w-12 h-12 rounded-full object-contain bg-white border">
+                    @else
+                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg">{{ $shortName }}</div>
+                    @endif
+                    <div>
+                        <p class="text-lg font-bold text-primary leading-tight">{{ $schoolName }}</p>
+                        <p class="text-xs text-gray-500">{{ $tagline }}</p>
+                    </div>
+                </a>
+
+                <nav class="hidden md:flex items-center gap-8 font-medium">
+                    <a href="{{ route('home') }}" class="hover:text-primary {{ request()->routeIs('home') ? 'text-primary font-semibold' : '' }}">Home</a>
+                    <a href="{{ route('about') }}" class="hover:text-primary {{ request()->routeIs('about') ? 'text-primary font-semibold' : '' }}">About</a>
+                    <a href="{{ route('academics') }}" class="hover:text-primary {{ request()->routeIs('academics') ? 'text-primary font-semibold' : '' }}">Academics</a>
+                    <a href="{{ route('teachers.index') }}" class="hover:text-primary {{ request()->routeIs('teachers.index') ? 'text-primary font-semibold' : '' }}">Teachers</a>
+                    <a href="{{ route('notices.index') }}" class="hover:text-primary {{ request()->routeIs('notices.*') ? 'text-primary font-semibold' : '' }}">Notices</a>
+                    <a href="{{ route('news.index') }}" class="hover:text-primary {{ request()->routeIs('news.*') ? 'text-primary font-semibold' : '' }}">News</a>
+                    <a href="{{ route('gallery.index') }}" class="hover:text-primary {{ request()->routeIs('gallery.index') ? 'text-primary font-semibold' : '' }}">Gallery</a>
+                    <a href="{{ route('results.index') }}" class="hover:text-primary {{ request()->routeIs('results.index') ? 'text-primary font-semibold' : '' }}">Results</a>
+                    <a href="{{ route('routine.index') }}" class="hover:text-primary {{ request()->routeIs('routine.index') ? 'text-primary font-semibold' : '' }}">Routine</a>
+                    <a href="{{ route('contact') }}" class="hover:text-primary {{ request()->routeIs('contact') ? 'text-primary font-semibold' : '' }}">Contact</a>
+                    <a href="{{ route('admission.create') }}" class="bg-gold text-white px-5 py-2 rounded-full hover:opacity-90 transition">Admission</a>
+                </nav>
+
+                <button id="mobile-menu-btn" class="md:hidden text-gray-700 text-2xl">☰</button>
+            </div>
+
+            {{-- Mobile menu --}}
+            <div id="mobile-menu" class="hidden md:hidden pb-4 space-y-2">
+                <a href="{{ route('home') }}" class="block py-2 border-b">Home</a>
+                <a href="{{ route('about') }}" class="block py-2 border-b">About</a>
+                <a href="{{ route('academics') }}" class="block py-2 border-b">Academics</a>
+                <a href="{{ route('teachers.index') }}" class="block py-2 border-b">Teachers</a>
+                <a href="{{ route('notices.index') }}" class="block py-2 border-b">Notices</a>
+                <a href="{{ route('news.index') }}" class="block py-2 border-b">News</a>
+                <a href="{{ route('gallery.index') }}" class="block py-2 border-b">Gallery</a>
+                <a href="{{ route('results.index') }}" class="block py-2 border-b">Results</a>
+                <a href="{{ route('routine.index') }}" class="block py-2 border-b">Routine</a>
+                <a href="{{ route('contact') }}" class="block py-2 border-b">Contact</a>
+                <a href="{{ route('admission.create') }}" class="block py-2 text-gold font-semibold">Admission</a>
             </div>
         </div>
     </header>
-    @if(session('success'))<div class="site-container mt-5"><div class="alert-success">{{ session('success') }}</div></div>@endif
-    <main>@yield('content')</main>
-    <footer class="bg-slate-950 text-slate-300 mt-20">
-        <div class="site-container py-14 grid md:grid-cols-2 lg:grid-cols-4 gap-10">
-            <div class="lg:col-span-2"><div class="flex items-center gap-3 mb-4"><div class="brand-mark">{{ $shortName }}</div><h3 class="text-white text-xl font-black">{{ $schoolName }}</h3></div><p class="max-w-xl text-sm leading-7 text-slate-400">{{ $schoolSettings?->footer_text ?: $siteDescription }}</p></div>
-            <div><h4 class="text-white font-bold mb-4">Explore</h4><div class="space-y-2 text-sm"><a class="footer-link" href="{{ route('about') }}">About Us</a><a class="footer-link" href="{{ route('academics') }}">Academics</a><a class="footer-link" href="{{ route('teachers.index') }}">Teachers</a><a class="footer-link" href="{{ route('gallery.index') }}">Gallery</a></div></div>
-            <div><h4 class="text-white font-bold mb-4">Quick Access</h4><div class="space-y-2 text-sm"><a class="footer-link" href="{{ route('notices.index') }}">Notices</a><a class="footer-link" href="{{ route('results.index') }}">Student Results</a><a class="footer-link" href="{{ route('routine.index') }}">Class Routine</a><a class="footer-link" href="{{ route('admission.create') }}">Online Admission</a></div></div>
+
+    {{-- Flash messages --}}
+    @if (session('success'))
+        <div id="flash-message" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+            <div class="bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded-lg">
+                {{ session('success') }}
+            </div>
         </div>
-        <div class="border-t border-white/10"><div class="site-container py-5 flex flex-col sm:flex-row justify-between gap-2 text-xs text-slate-500"><span>© {{ date('Y') }} {{ $schoolName }}. All rights reserved.</span><span>{{ $schoolSettings?->established_year ? 'Established '.$schoolSettings->established_year : 'Learning • Character • Leadership' }}</span></div></div>
+    @endif
+
+    <main>
+        @yield('content')
+    </main>
+
+    {{-- Footer --}}
+    <footer class="bg-primary-dark text-gray-300 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-white font-bold text-lg mb-3">{{ $schoolName }}</h3>
+                <p class="text-sm">{{ $schoolSettings?->footer_text ?: $siteDescription }}</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-3">Quick Links</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="{{ route('about') }}" class="hover:text-white">About Us</a></li>
+                    <li><a href="{{ route('academics') }}" class="hover:text-white">Academics</a></li>
+                    <li><a href="{{ route('admission.create') }}" class="hover:text-white">Admission</a></li>
+                    <li><a href="{{ route('notices.index') }}" class="hover:text-white">Notices</a></li>
+                    <li><a href="{{ route('results.index') }}" class="hover:text-white">Student Results</a></li>
+                    <li><a href="{{ route('routine.index') }}" class="hover:text-white">Class Routine</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-3">Resources</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="{{ route('teachers.index') }}" class="hover:text-white">Our Teachers</a></li>
+                    <li><a href="{{ route('gallery.index') }}" class="hover:text-white">Gallery</a></li>
+                    <li><a href="{{ route('contact') }}" class="hover:text-white">Contact Us</a></li>
+                    <li><a href="{{ route('login') }}" class="hover:text-white">Admin Login</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-3">Contact</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>📍 {{ $schoolSettings?->address ?: 'Mirpur, Dhaka, Bangladesh' }}</li>
+                    @if($schoolSettings?->phone)<li>📞 {{ $schoolSettings->phone }}</li>@endif
+                    @if($schoolSettings?->email)<li>✉️ {{ $schoolSettings->email }}</li>@endif
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-white/10 text-center text-sm py-4">
+            &copy; {{ date('Y') }} {{ $schoolName }}. All rights reserved.
+        </div>
     </footer>
-</body></html>
+</body>
+</html>
