@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Academic;
 use App\Models\Admission;
 use App\Models\ContactMessage;
 use App\Models\EventModel;
