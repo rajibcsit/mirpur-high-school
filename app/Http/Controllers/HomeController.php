@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Academic;
 use App\Models\EventModel;
 use App\Models\Gallery;
 use App\Models\Notice;
@@ -18,8 +17,6 @@ class HomeController extends Controller
     public function index()
     {
         $notices = Notice::published()->latest('published_at')->take(5)->get();
-        // Only published Latest News items are shown in the homepage ticker.
-        // A NULL published_at means publish immediately.
         $latestNews = News::query()
             ->where('is_published', true)
             ->orderByDesc('created_at')
@@ -40,13 +37,11 @@ class HomeController extends Controller
         return view('home', compact('notices', 'latestNews', 'events', 'gallery', 'teachers', 'sliders', 'schoolSettings', 'stats'));
     }
 
-    public function about() { return view('about'); }
-    public function academics()
+    public function about()
     {
-        $classes = Academic::where('category', 'class')->where('is_active', true)->orderBy('display_order')->get();
-        $subjects = Academic::where('category', 'subject')->where('is_active', true)->orderBy('display_order')->get();
-        $programs = Academic::whereIn('category', ['program', 'facility'])->where('is_active', true)->orderBy('display_order')->get();
-        return view('academics', compact('classes', 'subjects', 'programs'));
+        $schoolSettings = \App\Models\Setting::first();
+        return view('about', compact('schoolSettings'));
     }
+    public function academics() { return view('academics'); }
     public function contact() { return view('contact'); }
 }
