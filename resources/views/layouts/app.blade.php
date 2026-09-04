@@ -97,44 +97,67 @@
     </main>
 
     {{-- Footer --}}
-    <footer class="site-footer text-gray-300 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+<footer class="site-footer text-gray-400 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_.8fr_.8fr_1fr] gap-10 lg:gap-14">
             <div>
-                <h3 class="text-white font-bold text-lg mb-3">{{ $schoolName }}</h3>
-                <p class="text-sm">{{ $schoolSettings?->footer_text ?: $siteDescription }}</p>
+                <a href="{{ route('home') }}" class="footer-brand">
+                    @if($schoolSettings?->logo_path)
+                        <img src="{{ asset('storage/'.$schoolSettings->logo_path) }}" alt="{{ $schoolName }}" class="w-14 h-14 rounded-2xl object-contain bg-white/5 border border-white/10 p-1">
+                    @else
+                        <span class="footer-logo">{{ $shortName }}</span>
+                    @endif
+                    <span>
+                        <strong>{{ $schoolName }}</strong>
+                        <small>{{ $tagline }}</small>
+                    </span>
+                </a>
+                <p class="mt-6 text-sm leading-7 max-w-md text-gray-500">
+                    {{ $schoolSettings?->footer_text ?: $siteDescription }}
+                </p>
+                <a href="{{ route('contact') }}" class="footer-contact-btn mt-6">
+                    Get in touch <span>↗</span>
+                </a>
             </div>
+
             <div>
-                <h4 class="text-white font-semibold mb-3">Quick Links</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="{{ route('about') }}" class="hover:text-white">About Us</a></li>
-                    <li><a href="{{ route('academics') }}" class="hover:text-white">Academics</a></li>
-                    <li><a href="{{ route('admission.create') }}" class="hover:text-white">Admission</a></li>
-                    <li><a href="{{ route('notices.index') }}" class="hover:text-white">Notices</a></li>
-                    <li><a href="{{ route('results.index') }}" class="hover:text-white">Student Results</a></li>
-                    <li><a href="{{ route('routine.index') }}" class="hover:text-white">Class Routine</a></li>
+                <h4 class="footer-heading">Explore</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ route('about') }}">About Us</a></li>
+                    <li><a href="{{ route('academics') }}">Academics</a></li>
+                    <li><a href="{{ route('teachers.index') }}">Our Teachers</a></li>
+                    <li><a href="{{ route('gallery.index') }}">School Gallery</a></li>
                 </ul>
             </div>
+
             <div>
-                <h4 class="text-white font-semibold mb-3">Resources</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="{{ route('teachers.index') }}" class="hover:text-white">Our Teachers</a></li>
-                    <li><a href="{{ route('gallery.index') }}" class="hover:text-white">Gallery</a></li>
-                    <li><a href="{{ route('contact') }}" class="hover:text-white">Contact Us</a></li>
-                    <li><a href="{{ route('login') }}" class="hover:text-white">Admin Login</a></li>
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ route('notices.index') }}">Notices</a></li>
+                    <li><a href="{{ route('results.index') }}">Student Results</a></li>
+                    <li><a href="{{ route('routine.index') }}">Class Routine</a></li>
+                    <li><a href="{{ route('admission.create') }}">Admission</a></li>
                 </ul>
             </div>
+
             <div>
-                <h4 class="text-white font-semibold mb-3">Contact</h4>
-                <ul class="space-y-2 text-sm">
-                    <li>📍 {{ $schoolSettings?->address ?: 'Mirpur, Dhaka, Bangladesh' }}</li>
-                    @if($schoolSettings?->phone)<li>📞 {{ $schoolSettings->phone }}</li>@endif
-                    @if($schoolSettings?->email)<li>✉️ {{ $schoolSettings->email }}</li>@endif
-                </ul>
+                <h4 class="footer-heading">Contact Us</h4>
+                <div class="footer-contact-list">
+                    <div><span class="footer-contact-icon">⌖</span><p>{{ $schoolSettings?->address ?: 'Mirpur, Dhaka, Bangladesh' }}</p></div>
+                    @if($schoolSettings?->phone)<div><span class="footer-contact-icon">☎</span><p>{{ $schoolSettings->phone }}</p></div>@endif
+                    @if($schoolSettings?->email)<div><span class="footer-contact-icon">✉</span><p>{{ $schoolSettings->email }}</p></div>@endif
+                </div>
             </div>
         </div>
-        <div class="border-t border-white/10 text-center text-sm py-4">
-            &copy; {{ date('Y') }} {{ $schoolName }}. All rights reserved.
+
+        <div class="footer-bottom mt-14 pt-6">
+            <p>&copy; {{ date('Y') }} {{ $schoolName }}. All rights reserved.</p>
+            <div class="flex items-center gap-5">
+                <a href="{{ route('contact') }}">Contact</a>
+                <a href="{{ route('login') }}">Admin Login</a>
+            </div>
         </div>
-    </footer>
+    </div>
+</footer>
 </body>
 </html>

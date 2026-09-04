@@ -70,7 +70,57 @@
 
 {{-- Notices/events --}}<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20"><div class="grid lg:grid-cols-[1.05fr_.95fr] gap-12"><div class="reveal-up"><div class="flex justify-between items-end mb-8"><div><span class="section-eyebrow">STAY INFORMED</span><h2 class="section-title text-4xl">Latest <span>Notices</span></h2></div><a href="{{ route('notices.index') }}" class="text-primary font-bold">View all →</a></div><div class="space-y-4">@forelse($notices as $notice)<a href="{{ route('notices.show',$notice->slug) }}" class="notice-card"><div class="notice-date"><b>{{ $notice->published_at?->format('d') }}</b><span>{{ $notice->published_at?->format('M') }}</span></div><div class="min-w-0"><span class="text-xs uppercase tracking-widest text-gold font-bold">{{ $notice->category }}</span><h3 class="font-bold text-lg text-gray-900 truncate mt-1">{{ $notice->title }}</h3></div><span class="ml-auto text-xl text-primary">↗</span></a>@empty<p class="text-gray-500">No notices published yet.</p>@endforelse</div></div><div class="reveal-up"><div class="flex justify-between items-end mb-8"><div><span class="section-eyebrow">WHAT'S HAPPENING</span><h2 class="section-title text-4xl">Upcoming <span>Events</span></h2></div><a href="{{ route('events.index') }}" class="text-primary font-bold">View all →</a></div><div class="space-y-4">@forelse($events as $event)<a href="{{ route('events.show', $event) }}" class="event-card block hover:-translate-y-1 transition duration-300"><div class="event-date"><b>{{ $event->event_date->format('d') }}</b><span>{{ $event->event_date->format('M') }}</span></div><div><h3 class="font-bold text-lg">{{ $event->title }}</h3><p class="text-sm text-gray-500 mt-1">{{ $event->event_time ?: 'School Event' }} @if($event->description) · {{ \Illuminate\Support\Str::limit($event->description,55) }} @endif</p></div><span class="ml-auto text-xl text-primary">↗</span></a>@empty<p class="text-gray-500">No upcoming events.</p>@endforelse</div></div></div></section>
 
-{{-- Teachers --}}<section class="bg-slate-950 text-white py-20"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex justify-between items-end mb-10"><div><span class="section-eyebrow text-gold">OUR FACULTY</span><h2 class="section-title text-white">Meet our <span>teachers.</span></h2></div><a href="{{ route('teachers.index') }}" class="text-white font-bold">View faculty →</a></div><div class="grid sm:grid-cols-2 md:grid-cols-4 gap-5">@foreach($teachers as $teacher)<div class="teacher-card reveal-scale">@if($teacher->photo_path)<img src="{{ asset('storage/'.$teacher->photo_path) }}" alt="{{ $teacher->name }}">@else<div class="teacher-placeholder">{{ strtoupper(substr($teacher->name,0,1)) }}</div>@endif<div class="p-5"><h3 class="font-bold text-lg">{{ $teacher->name }}</h3><p class="text-gold text-sm mt-1">{{ $teacher->designation }}</p><p class="text-white/50 text-xs mt-1">{{ $teacher->subject }}</p></div></div>@endforeach</div></div></section>
+{{-- Teachers / Faculty --}}
+<section class="home-faculty-section py-20 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 lg:mb-12">
+            <div class="max-w-2xl reveal-up">
+                <span class="section-eyebrow">OUR FACULTY</span>
+                <h2 class="section-title text-4xl md:text-5xl">Meet the people who <span>inspire.</span></h2>
+                <p class="text-gray-500 mt-4 max-w-xl leading-7">
+                    Dedicated educators who bring knowledge, care and experience into every classroom.
+                </p>
+            </div>
+            <a href="{{ route('teachers.index') }}" class="faculty-view-all reveal-up">
+                View all teachers <span>↗</span>
+            </a>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            @forelse($teachers as $teacher)
+                <article class="home-faculty-card reveal-scale">
+                    <div class="home-faculty-photo">
+                        @if($teacher->photo_path)
+                            <img src="{{ asset('storage/'.$teacher->photo_path) }}" alt="{{ $teacher->name }}" loading="lazy">
+                        @else
+                            <div class="home-faculty-placeholder">
+                                {{ strtoupper(substr($teacher->name, 0, 1)) }}
+                            </div>
+                        @endif
+                        <div class="home-faculty-subject">
+                            {{ $teacher->subject ?: 'Faculty' }}
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-xl font-black text-slate-900">{{ $teacher->name }}</h3>
+                        <p class="text-primary font-bold text-sm mt-1">{{ $teacher->designation ?: 'Teacher' }}</p>
+                        @if($teacher->qualification)
+                            <p class="text-gray-500 text-sm mt-3 line-clamp-2">{{ $teacher->qualification }}</p>
+                        @endif
+                        <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between">
+                            <span class="text-[11px] uppercase tracking-widest font-black text-gray-400">Educator</span>
+                            <a href="{{ route('teachers.index') }}" aria-label="View {{ $teacher->name }}" class="home-faculty-arrow">→</a>
+                        </div>
+                    </div>
+                </article>
+            @empty
+                <div class="sm:col-span-2 lg:col-span-4 rounded-3xl border border-gray-200 bg-white p-12 text-center text-gray-500 shadow-sm">
+                    Our teacher profiles will appear here soon.
+                </div>
+            @endforelse
+        </div>
+    </div>
+</section>
 
 {{-- Gallery --}}@if($gallery->count())<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20"><div class="flex justify-between items-end mb-9"><div><span class="section-eyebrow">CAMPUS LIFE</span><h2 class="section-title text-4xl">Moments from <span>school.</span></h2></div><a href="{{ route('gallery.index') }}" class="text-primary font-bold">View gallery →</a></div><div class="gallery-grid">@foreach($gallery as $image)<div class="gallery-item reveal-scale"><img src="{{ asset('storage/'.$image->image_path) }}" alt="{{ $image->title }}"><div>{{ $image->title }}</div></div>@endforeach</div></section>@endif
 
