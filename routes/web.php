@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdmissionController as AdminAdmissionController;
+use App\Http\Controllers\Admin\AcademicController as AdminAcademicController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController;
@@ -70,6 +71,7 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
     Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
 
+    Route::resource('academics', AdminAcademicController::class)->except(['show']);
     Route::resource('sliders', SliderController::class)->except(['show']);
     Route::resource('students', StudentController::class)->except(['show']);
     Route::resource('results', AdminResultController::class)->only(['index','create','store','destroy']);

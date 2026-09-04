@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Academic;
 use App\Models\EventModel;
 use App\Models\Gallery;
 use App\Models\Notice;
@@ -21,7 +22,8 @@ class HomeController extends Controller
         // A NULL published_at means publish immediately.
         $latestNews = News::query()
             ->where('is_published', true)
-            ->latest('created_at')
+            ->orderByDesc('created_at')
+            ->orderByDesc('published_at')
             ->take(8)
             ->get();
         $events = EventModel::where('event_date', '>=', now()->subDay())->orderBy('event_date')->take(3)->get();
@@ -39,6 +41,12 @@ class HomeController extends Controller
     }
 
     public function about() { return view('about'); }
-    public function academics() { return view('academics'); }
+    public function academics()
+    {
+        $classes = Academic::where('category', 'class')->where('is_active', true)->orderBy('display_order')->get();
+        $subjects = Academic::where('category', 'subject')->where('is_active', true)->orderBy('display_order')->get();
+        $programs = Academic::whereIn('category', ['program', 'facility'])->where('is_active', true)->orderBy('display_order')->get();
+        return view('academics', compact('classes', 'subjects', 'programs'));
+    }
     public function contact() { return view('contact'); }
 }

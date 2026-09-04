@@ -97,7 +97,7 @@
     </main>
 
     {{-- Footer --}}
-    <footer class="bg-primary-dark text-gray-300 mt-16">
+    <footer class="site-footer text-gray-300 mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
                 <h3 class="text-white font-bold text-lg mb-3">{{ $schoolName }}</h3>

@@ -1,28 +1,11 @@
 @extends('layouts.app')
 @section('title', 'Academics - Mirpur High School')
-
 @section('content')
-<section class="bg-primary text-white py-16 text-center">
-    <h1 class="text-4xl font-bold">Academics</h1>
-    <p class="text-gray-200 mt-2">Curriculum, classes and academic programs</p>
-</section>
-
-<section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <h2 class="text-2xl font-bold text-primary mb-8">Classes Offered</h2>
-    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mb-16">
-        @foreach(['Class VI', 'Class VII', 'Class VIII', 'Class IX', 'Class X (SSC)'] as $class)
-            <div class="bg-white p-6 rounded-xl shadow border-t-4 border-primary">
-                <h3 class="font-semibold text-lg">{{ $class }}</h3>
-                <p class="text-sm text-gray-500 mt-1">Bangla &amp; English medium sections available.</p>
-            </div>
-        @endforeach
-    </div>
-
-    <h2 class="text-2xl font-bold text-primary mb-8">Subjects</h2>
-    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-        @foreach(['Bangla', 'English', 'Mathematics', 'General Science', 'ICT', 'Social Science', 'Religion', 'Physical Education'] as $subject)
-            <div class="bg-primary/5 border border-primary/20 rounded-lg p-4 text-center font-medium text-primary">{{ $subject }}</div>
-        @endforeach
-    </div>
+<section class="page-hero"><div class="max-w-7xl mx-auto px-4 py-20 text-center"><span class="section-eyebrow">LEARNING & GROWTH</span><h1 class="text-4xl sm:text-6xl font-black mt-3">Academics<span class="text-gold">.</span></h1><p class="text-white/70 max-w-2xl mx-auto mt-4">A structured learning journey designed to build knowledge, confidence, discipline and future-ready skills.</p></div></section>
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+<div class="mb-10"><span class="section-eyebrow">ACADEMIC LEVELS</span><h2 class="section-title text-3xl sm:text-4xl">Classes we <span>offer.</span></h2></div>
+<div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-5 mb-20">@forelse($classes as $class)<div class="academic-card reveal-up"><div class="academic-icon">{{ $class->icon ?: '📚' }}</div><h3>{{ $class->title }}</h3><p>{{ $class->description }}</p><span class="academic-arrow">→</span></div>@empty<div class="col-span-full text-gray-500">No classes available.</div>@endforelse</div>
+<div class="grid lg:grid-cols-[.75fr_1.25fr] gap-10 items-start"><div><span class="section-eyebrow">CORE CURRICULUM</span><h2 class="section-title text-3xl sm:text-4xl">Subjects that <span>matter.</span></h2><p class="text-gray-500 mt-4 leading-7">Our curriculum balances academic fundamentals with practical knowledge, communication, digital literacy and personal development.</p></div><div class="grid sm:grid-cols-2 gap-4">@forelse($subjects as $subject)<div class="subject-card reveal-scale"><div class="subject-icon">{{ $subject->icon ?: '•' }}</div><div><h3>{{ $subject->title }}</h3><p>{{ $subject->description }}</p></div></div>@empty<div class="text-gray-500">No subjects available.</div>@endforelse</div></div>
+@if($programs->isNotEmpty())<div class="mt-20"><span class="section-eyebrow">MORE</span><h2 class="section-title text-3xl sm:text-4xl">Beyond the <span>classroom.</span></h2><div class="grid md:grid-cols-3 gap-5 mt-8">@foreach($programs as $item)<div class="feature-card reveal-up"><div class="feature-icon">{{ $item->icon ?: '✦' }}</div><div><h3>{{ $item->title }}</h3><p>{{ $item->description }}</p></div></div>@endforeach</div></div>@endif
 </section>
 @endsection

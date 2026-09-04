@@ -1,29 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Our Teachers - Mirpur High School')
-
 @section('content')
-<section class="bg-primary text-white py-16 text-center">
-    <h1 class="text-4xl font-bold">Our Teachers</h1>
-    <p class="text-gray-200 mt-2">Meet the dedicated educators of Mirpur High School</p>
-</section>
-
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        @forelse($teachers as $teacher)
-            <div class="bg-white rounded-xl shadow p-6 text-center hover:shadow-lg transition">
-                @if($teacher->photo_path)
-                    <img src="{{ asset('storage/' . $teacher->photo_path) }}" class="w-24 h-24 rounded-full mx-auto object-cover mb-4" alt="{{ $teacher->name }}">
-                @else
-                    <div class="w-24 h-24 rounded-full mx-auto mb-4 bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold">{{ substr($teacher->name, 0, 1) }}</div>
-                @endif
-                <h3 class="font-semibold">{{ $teacher->name }}</h3>
-                <p class="text-sm text-gold">{{ $teacher->designation }}</p>
-                <p class="text-xs text-gray-500 mb-2">{{ $teacher->subject }}</p>
-                <p class="text-xs text-gray-400">{{ $teacher->qualification }}</p>
-            </div>
-        @empty
-            <p class="text-gray-500 col-span-full text-center">No teacher records found.</p>
-        @endforelse
-    </div>
-</section>
+<section class="page-hero"><div class="max-w-7xl mx-auto px-4 py-20 text-center"><span class="section-eyebrow">OUR FACULTY</span><h1 class="text-4xl sm:text-6xl font-black mt-3">Meet our <span class="text-gold">teachers.</span></h1><p class="text-white/70 max-w-2xl mx-auto mt-4">Experienced educators committed to helping every student learn, grow and succeed.</p></div></section>
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16"><div class="flex items-end justify-between gap-5 mb-10"><div><span class="section-eyebrow">DEDICATED EDUCATORS</span><h2 class="section-title text-3xl sm:text-4xl">Our teaching <span>team.</span></h2></div><span class="hidden sm:block text-sm text-gray-400">{{ $teachers->total() }} faculty members</span></div>
+<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">@forelse($teachers as $teacher)<article class="faculty-card reveal-scale"><div class="faculty-photo">@if($teacher->photo_path)<img src="{{ asset('storage/'.$teacher->photo_path) }}" alt="{{ $teacher->name }}">@else<div class="faculty-placeholder">{{ strtoupper(substr($teacher->name,0,1)) }}</div>@endif<div class="faculty-badge">{{ $teacher->subject ?: 'Faculty' }}</div></div><div class="p-5"><h3 class="text-xl font-black text-slate-900">{{ $teacher->name }}</h3><p class="text-primary font-bold text-sm mt-1">{{ $teacher->designation }}</p><p class="text-gray-500 text-sm mt-3">{{ $teacher->qualification }}</p>@if($teacher->email || $teacher->phone)<div class="mt-4 pt-4 border-t text-xs text-gray-400 space-y-1">@if($teacher->email)<div>✉ {{ $teacher->email }}</div>@endif @if($teacher->phone)<div>☎ {{ $teacher->phone }}</div>@endif</div>@endif</div></article>@empty<div class="col-span-full py-16 text-center text-gray-500">No teacher records found.</div>@endforelse</div><div class="mt-10">{{ $teachers->links() }}</div></section>
 @endsection
