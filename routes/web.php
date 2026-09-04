@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EventController as FrontendEventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticeController;
@@ -41,6 +42,9 @@ Route::get('/notices', [NoticeController::class, 'index'])->name('notices.index'
 Route::get('/notices/{slug}', [NoticeController::class, 'show'])->name('notices.show');
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
+
+Route::get('/events', [FrontendEventController::class, 'index'])->name('events.index');
+Route::get('/events/{event}', [FrontendEventController::class, 'show'])->name('events.show');
 
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers.index');
@@ -70,8 +74,8 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
     Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
-
     Route::resource('academics', AdminAcademicController::class)->except(['show']);
+
     Route::resource('sliders', SliderController::class)->except(['show']);
     Route::resource('students', StudentController::class)->except(['show']);
     Route::resource('results', AdminResultController::class)->only(['index','create','store','destroy']);
