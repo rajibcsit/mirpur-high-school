@@ -25,11 +25,11 @@
                 $links = [
                     ['route' => 'admin.dashboard', 'label' => 'Dashboard', 'icon' => '🏠'],
                     ['route' => 'admin.about.edit', 'label' => 'About Page', 'icon' => '🏫'],
+                    ['route' => 'admin.academics.index', 'label' => 'Academics', 'icon' => '📚'],
                     ['route' => 'admin.sliders.index', 'label' => 'Hero Sliders', 'icon' => '🖼️'],
                     ['route' => 'admin.students.index', 'label' => 'Students', 'icon' => '🎓'],
                     ['route' => 'admin.results.index', 'label' => 'Results', 'icon' => '📊'],
                     ['route' => 'admin.routines.index', 'label' => 'Class Routines', 'icon' => '🗓️'],
-                    ['route' => 'admin.academics.index', 'label' => 'Academics', 'icon' => '📚'],
                     ['route' => 'admin.notices.index', 'label' => 'Notices', 'icon' => '📢'],
                     ['route' => 'admin.news.index', 'label' => 'Latest News', 'icon' => '📰'],
                     ['route' => 'admin.events.index', 'label' => 'Events', 'icon' => '📅'],
