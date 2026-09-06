@@ -62,5 +62,10 @@ class HomeController extends Controller
             'categories' => $items->pluck('category')->unique()->values(),
         ]);
     }
-    public function contact() { return view('contact'); }
+    public function contact()
+    {
+        $schoolSettings = Setting::first();
+
+        return view('contact', compact('schoolSettings'));
+    }
 }
