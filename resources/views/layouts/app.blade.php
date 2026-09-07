@@ -23,7 +23,7 @@
 
     {{-- Top info bar --}}
     <div class="bg-primary text-white text-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col sm:flex-row justify-between items-center gap-1">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col sm:flex-row justify-between items-center gap-1 text-center sm:text-left">
             <p>📍 {{ $schoolSettings?->address ?: 'Mirpur, Dhaka, Bangladesh' }}</p>
             <p>
                 @if($schoolSettings?->phone) 📞 {{ $schoolSettings->phone }} @endif
@@ -36,7 +36,7 @@
     {{-- Navbar --}}
     <header class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
+            <div class="flex justify-between items-center h-20 gap-3">
                 <a href="{{ route('home') }}" class="flex items-center gap-3">
                     @if($schoolSettings?->logo_path)
                         <img src="{{ asset('storage/'.$schoolSettings->logo_path) }}" alt="{{ $schoolName }}" class="w-12 h-12 rounded-full object-contain bg-white border">
@@ -44,8 +44,8 @@
                         <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg">{{ $shortName }}</div>
                     @endif
                     <div>
-                        <p class="text-lg font-bold text-primary leading-tight">{{ $schoolName }}</p>
-                        <p class="text-xs text-gray-500">{{ $tagline }}</p>
+                        <p class="text-sm sm:text-lg font-bold text-primary leading-tight truncate max-w-[190px] sm:max-w-none">{{ $schoolName }}</p>
+                        <p class="text-[10px] sm:text-xs text-gray-500 truncate max-w-[190px] sm:max-w-none">{{ $tagline }}</p>
                     </div>
                 </a>
 

@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\TeacherController as AdminTeacherController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AcademicController;
 use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ContactController;
@@ -29,9 +31,9 @@ use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [HomeController::class, 'about'])->name('about');
-Route::get('/academics', [HomeController::class, 'academics'])->name('academics');
-Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/academics', [AcademicController::class, 'index'])->name('academics');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/notices', [NoticeController::class, 'index'])->name('notices.index');

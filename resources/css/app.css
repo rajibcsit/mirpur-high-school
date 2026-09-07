@@ -52,3 +52,44 @@
 .site-footer .footer-contact-list p { color: #8b9490; }
 .site-footer:before { background: rgba(15,81,50,.16); }
 .site-footer:after { background: rgba(240,200,75,.055); }
+
+
+/* Mobile stability improvements */
+img, svg { max-width: 100%; }
+button, a, input, textarea, select { max-width: 100%; }
+.feature-card, .notice-card, .event-card, .home-faculty-card { min-width: 0; }
+.feature-card > div:nth-child(2), .notice-card > div:nth-child(2), .event-card > div:nth-child(2) { min-width: 0; }
+
+@media (max-width: 640px) {
+    .hero-shell #hero-slider { min-height: 560px; }
+    .hero-shell .hero-slide { min-height: 560px; }
+    .hero-shell .hero-slide > div { min-height: 560px; }
+    .hero-shell h1 { font-size: clamp(2.25rem, 11vw, 3.5rem) !important; }
+    .hero-shell .btn-gold,
+    .hero-shell .btn-glass { padding: .75rem 1.05rem; font-size: .86rem; }
+    .news-ticker { border-radius: 14px; }
+    .ticker-label { padding: 12px 14px; font-size: .66rem; }
+    .ticker-track a { padding: 0 18px; font-size: .82rem; }
+    .section-title { font-size: clamp(2rem, 9vw, 3rem) !important; }
+    .notice-card, .event-card { gap: 10px; padding: 12px; }
+    .notice-date, .event-date { width: 46px; height: 54px; border-radius: 12px; }
+    .notice-date b, .event-date b { font-size: 1.05rem; }
+    .notice-card h3, .event-card h3 { font-size: .95rem; }
+    .notice-card p, .event-card p { font-size: .75rem; }
+    .home-faculty-photo { height: 240px; }
+    .gallery-grid { gap: 10px; }
+    .gallery-item { height: 150px !important; border-radius: 14px; }
+    .cta-section { padding: 75px 0; }
+    .cta-section h2 { font-size: clamp(2rem, 9vw, 3rem) !important; }
+}
+
+@media (max-width: 420px) {
+    .hero-shell #hero-slider,
+    .hero-shell .hero-slide,
+    .hero-shell .hero-slide > div { min-height: 520px; }
+    .hero-shell .hero-slide > div { padding-top: 1rem; padding-bottom: 4rem; }
+    .feature-card { padding: 16px; gap: 10px; }
+    .feature-icon { width: 44px; height: 44px; border-radius: 12px; }
+    .feature-card h3 { font-size: .95rem; }
+    .feature-card p { font-size: .72rem; line-height: 1.4; }
+}

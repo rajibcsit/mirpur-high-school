@@ -4,15 +4,15 @@
 @section('content')
 <section class="hero-shell relative overflow-hidden text-white">
     <div class="hero-glow hero-glow-one"></div><div class="hero-glow hero-glow-two"></div>
-    <div id="hero-slider" class="relative min-h-[650px] lg:min-h-[730px]">
+    <div id="hero-slider" class="relative min-h-[560px] sm:min-h-[650px] lg:min-h-[730px]">
         @forelse($sliders as $index => $slide)
         <article class="hero-slide absolute inset-0 transition-opacity duration-1000 {{ $index===0?'opacity-100':'opacity-0 pointer-events-none' }}" data-slide="{{ $index }}">
             @if($slide->image_path)<img src="{{ asset('storage/'.$slide->image_path) }}" class="hero-image absolute inset-0 w-full h-full object-cover" alt="{{ $slide->title }}"><div class="absolute inset-0 bg-gradient-to-r from-[#052e1c]/95 via-[#0f5132]/75 to-[#0f5132]/25"></div>@else<div class="absolute inset-0 bg-gradient-to-br from-[#052e1c] via-primary to-[#12643f]"></div>@endif
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[650px] lg:min-h-[730px] flex items-center relative z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[560px] sm:min-h-[650px] lg:min-h-[730px] flex items-center relative z-10">
                 <div class="max-w-3xl pt-12 reveal-up">
                     <span class="hero-kicker">{{ $slide->subtitle ?: 'Welcome to our school' }}</span>
-                    <h1 class="text-5xl md:text-7xl font-black leading-[1.02] tracking-tight mt-5 mb-6">{{ $slide->title }}</h1>
-                    @if($slide->description)<p class="text-lg md:text-xl text-white/85 max-w-2xl leading-8 mb-9">{{ $slide->description }}</p>@endif
+                    <h1 class="text-4xl sm:text-5xl md:text-7xl font-black leading-[1.05] tracking-tight mt-5 mb-6 break-words">{{ $slide->title }}</h1>
+                    @if($slide->description)<p class="text-base sm:text-lg md:text-xl text-white/85 max-w-2xl leading-7 sm:leading-8 mb-8 sm:mb-9">{{ $slide->description }}</p>@endif
                     <div class="flex flex-wrap gap-4">
                         @if($slide->button_text && $slide->button_url)<a href="{{ $slide->button_url }}" class="btn-gold">{{ $slide->button_text }} <span>→</span></a>@endif
                         <a href="{{ route('about') }}" class="btn-glass">Discover Our School</a>
@@ -59,7 +59,7 @@
 {{-- Quick access --}}
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8"><div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
 @foreach([['📊','Results','Check student examination results','results.index'],['🗓️','Routine','Find your weekly class schedule','routine.index'],['📰','News & Notices','Stay updated with school news','news.index'],['🎓','Admission','Start your admission journey','admission.create']] as $item)
-<a href="{{ route($item[3]) }}" class="feature-card reveal-up"><div class="feature-icon">{{ $item[0] }}</div><div><h3>{{ $item[1] }}</h3><p>{{ $item[2] }}</p></div><span class="feature-arrow">↗</span></a>
+<a href="{{ route($item[3]) }}" class="feature-card reveal-up min-w-0"><div class="feature-icon">{{ $item[0] }}</div><div><h3>{{ $item[1] }}</h3><p>{{ $item[2] }}</p></div><span class="feature-arrow">↗</span></a>
 @endforeach
 </div></section>
 

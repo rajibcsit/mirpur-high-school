@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactMessage;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    public function index()
+    {
+        $schoolSettings = Setting::first();
+
+        return view('contact.index', compact('schoolSettings'));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

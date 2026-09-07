@@ -9,7 +9,7 @@ class AdmissionController extends Controller
 {
     public function create()
     {
-        return view('admission');
+        return view('admission.index');
     }
 
     public function store(Request $request)
